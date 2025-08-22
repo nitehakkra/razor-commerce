@@ -14,28 +14,45 @@ export function formatCurrency(amount: number): string {
 }
 
 // Random review generation utilities
-const reviewComments = [
-  "Absolutely stunning design! The quality exceeded my expectations and the download was instant.",
-  "Perfect for my project. Clean, modern, and very professional looking.",
-  "Great value for money. The design is well-structured and easy to customize.",
-  "Amazing attention to detail. This saved me weeks of design work.",
-  "High-quality template with excellent documentation. Highly recommended!",
-  "Beautiful design system. Everything is well organized and pixel-perfect.",
-  "Outstanding work! The responsive design works flawlessly across all devices.",
-  "Exactly what I was looking for. Professional quality at an affordable price.",
-  "Impressive design with great attention to user experience. Love it!",
-  "Top-notch quality. The design is modern, clean, and very easy to implement.",
-  "Fantastic template! The color scheme and typography are perfectly balanced.",
-  "Excellent design with great customization options. Worth every penny.",
-  "Professional grade template. The attention to detail is remarkable.",
-  "Clean, modern design that's easy to work with. Highly satisfied!",
-  "Beautiful interface design. The components are well-crafted and reusable.",
-  "Amazing quality and instant delivery. Perfect for my client project.",
-  "Sleek design with excellent user flow. Couldn't be happier with this purchase.",
-  "Top quality template with great documentation. Easy to customize and implement.",
-  "Outstanding design work. The layout is intuitive and visually appealing.",
-  "Excellent value proposition. The design quality is professional grade."
-];
+const reviewComments = {
+  5: [
+    "Absolutely stunning design! The quality exceeded my expectations and the download was instant.",
+    "Amazing attention to detail. This saved me weeks of design work.",
+    "High-quality template with excellent documentation. Highly recommended!",
+    "Outstanding work! The responsive design works flawlessly across all devices.",
+    "Impressive design with great attention to user experience. Love it!",
+    "Top-notch quality. The design is modern, clean, and very easy to implement.",
+    "Fantastic template! The color scheme and typography are perfectly balanced.",
+    "Professional grade template. The attention to detail is remarkable.",
+    "Beautiful interface design. The components are well-crafted and reusable.",
+    "Amazing quality and instant delivery. Perfect for my client project.",
+    "Outstanding design work. The layout is intuitive and visually appealing."
+  ],
+  4: [
+    "Perfect for my project. Clean, modern, and very professional looking.",
+    "Great value for money. The design is well-structured and easy to customize.",
+    "Beautiful design system. Everything is well organized and pixel-perfect.",
+    "Exactly what I was looking for. Professional quality at an affordable price.",
+    "Excellent design with great customization options. Worth every penny.",
+    "Clean, modern design that's easy to work with. Highly satisfied!",
+    "Sleek design with excellent user flow. Couldn't be happier with this purchase.",
+    "Top quality template with great documentation. Easy to customize and implement.",
+    "Excellent value proposition. The design quality is professional grade.",
+    "Good design overall. Met my expectations and was easy to implement."
+  ],
+  3: [
+    "Decent template, does the job. Could use better documentation though.",
+    "Good design but took some time to customize to my needs.",
+    "Solid template with nice layouts. Some components could be more polished.",
+    "Fair quality for the price. The design is acceptable but not exceptional.",
+    "Good starting point for a project. Required some modifications to fit my needs.",
+    "Decent design system. Works well but lacks some advanced features I expected.",
+    "Reasonable template with clean design. Could benefit from more customization options.",
+    "Good value but the documentation could be more comprehensive.",
+    "Nice design overall. A few minor issues but generally satisfied with the purchase.",
+    "Adequate template for basic projects. Does what it promises but nothing more."
+  ]
+};
 
 const reviewerNames = [
   "Alex Chen", "Sarah Johnson", "Mike Rodriguez", "Emily Davis", "David Kim",
@@ -57,16 +74,24 @@ export function generateRandomReviews(productId: string, count: number = Math.fl
     } while (usedNames.has(userName));
     usedNames.add(userName);
     
-    const rating = Math.random() < 0.7 ? 5 : Math.random() < 0.8 ? 4 : Math.random() < 0.9 ? 3 : 2;
+    // Generate ratings between 3-5 with realistic distribution
+    const rand = Math.random();
+    let rating;
+    if (rand < 0.4) rating = 5;        // 40% get 5 stars
+    else if (rand < 0.7) rating = 4;   // 30% get 4 stars  
+    else rating = 3;                   // 30% get 3 stars
     const daysAgo = Math.floor(Math.random() * 90) + 1;
     const date = new Date();
     date.setDate(date.getDate() - daysAgo);
+    
+    const ratingComments = reviewComments[rating as keyof typeof reviewComments];
+    const comment = ratingComments[Math.floor(Math.random() * ratingComments.length)];
     
     reviews.push({
       id: `${productId}-review-${i + 1}`,
       userName,
       rating,
-      comment: reviewComments[Math.floor(Math.random() * reviewComments.length)],
+      comment,
       date: date.toISOString().split('T')[0],
       verified: Math.random() > 0.3 // 70% chance of being verified
     });
