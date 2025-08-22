@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/contexts/CartContext';
 import { useIsMobile } from '@/hooks/use-mobile';
-import brandLogo from '@/assets/brand-logo.jpg';
+import brandLogo from '@/assets/brand-logo.png';
 
 const Header: React.FC = () => {
   const { itemCount } = useCart();
@@ -26,7 +26,7 @@ const Header: React.FC = () => {
           <Link to="/" className="flex items-center space-x-2">
             <img 
               src={brandLogo} 
-              alt="Premium Store" 
+              alt="DesignCraft" 
               className="w-8 h-8 md:w-10 md:h-10 object-contain"
             />
             <span className="font-display font-bold text-lg md:text-xl lg:text-2xl text-gradient">

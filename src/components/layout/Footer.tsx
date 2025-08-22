@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import brandLogo from '@/assets/brand-logo.jpg';
+import brandLogo from '@/assets/brand-logo.png';
 
 const Footer: React.FC = () => {
   return (
@@ -16,8 +16,8 @@ const Footer: React.FC = () => {
             <div className="flex items-center space-x-2">
               <img 
                 src={brandLogo} 
-                alt="Premium Store" 
-                className="w-8 h-8 object-contain brightness-0 invert"
+                alt="DesignCraft" 
+                className="w-8 h-8 object-contain"
               />
               <span className="font-display font-bold text-xl text-accent">
                 DesignCraft
