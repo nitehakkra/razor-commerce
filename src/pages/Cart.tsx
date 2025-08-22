@@ -1,5 +1,5 @@
 import React from 'react';
-import { Minus, Plus, X, ArrowLeft, ShoppingBag, CreditCard } from 'lucide-react';
+import { Minus, Plus, X, ArrowLeft, ShoppingBag, CreditCard, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -238,11 +238,11 @@ const Cart: React.FC = () => {
               {/* Shipping Info */}
               <Card className="card-elegant">
                 <CardContent className="p-6">
-                  <h4 className="font-semibold mb-3">Shipping Information</h4>
+                  <h4 className="font-semibold mb-3">Delivery Information</h4>
                   <div className="text-sm text-muted-foreground space-y-2">
-                    <p>• Free shipping on orders above ₹500</p>
-                    <p>• Standard delivery: 2-5 business days</p>
-                    <p>• Express delivery available at checkout</p>
+                    <p>• Instant download after purchase</p>
+                    <p>• No shipping required - digital delivery</p>
+                    <p>• Lifetime access to downloads</p>
                     <p>• Real-time order tracking</p>
                   </div>
                 </CardContent>

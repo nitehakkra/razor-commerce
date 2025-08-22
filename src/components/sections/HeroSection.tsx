@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Star, Shield, Truck } from 'lucide-react';
+import { ArrowRight, Star, Shield, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero-image.jpg';
@@ -66,11 +66,11 @@ const HeroSection: React.FC = () => {
               </div>
               <div className="flex items-center space-x-3 justify-center lg:justify-start">
                 <div className="bg-accent/20 rounded-full p-2">
-                  <Truck className="h-5 w-5 text-accent" />
+                  <Zap className="h-5 w-5 text-accent" />
                 </div>
                 <div>
-                  <p className="font-semibold text-primary-foreground text-sm">Fast Delivery</p>
-                  <p className="text-primary-foreground/60 text-xs">Download instantly</p>
+                  <p className="font-semibold text-primary-foreground text-sm">Instant Delivery</p>
+                  <p className="text-primary-foreground/60 text-xs">Download immediately</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3 justify-center lg:justify-start">

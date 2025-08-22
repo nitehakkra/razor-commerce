@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Star, Shield, Truck, Heart, Share2 } from 'lucide-react';
+import { ArrowLeft, Star, Shield, Zap, Heart, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -136,10 +136,10 @@ const ProductDetail: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Truck className="h-5 w-5 text-accent" />
+                  <Zap className="h-5 w-5 text-accent" />
                   <div>
-                    <p className="font-semibold text-sm">Fast Delivery</p>
-                    <p className="text-xs text-muted-foreground">2-5 business days</p>
+                    <p className="font-semibold text-sm">Instant Delivery</p>
+                    <p className="text-xs text-muted-foreground">Download immediately</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -189,11 +189,11 @@ const ProductDetail: React.FC = () => {
                   <h3 className="text-xl font-semibold mb-6">Shipping & Returns</h3>
                   <div className="space-y-4 text-sm">
                     <div>
-                      <h4 className="font-semibold mb-2">Shipping Information</h4>
+                      <h4 className="font-semibold mb-2">Delivery Information</h4>
                       <ul className="text-muted-foreground space-y-1">
-                        <li>• Free shipping on orders above ₹500</li>
-                        <li>• Standard delivery: 2-5 business days</li>
-                        <li>• Express delivery available</li>
+                        <li>• Instant download after purchase</li>
+                        <li>• No shipping required - digital delivery</li>
+                        <li>• Lifetime access to downloads</li>
                         <li>• Real-time order tracking</li>
                       </ul>
                     </div>
