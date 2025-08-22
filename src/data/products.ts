@@ -1,102 +1,102 @@
 import { Product } from '@/types/product';
-import productEarbuds from '@/assets/product-earbuds.jpg';
-import productFitnessTracker from '@/assets/product-fitness-tracker.jpg';
-import productCameraLens from '@/assets/product-camera-lens.jpg';
-import productGamingKeyboard from '@/assets/product-gaming-keyboard.jpg';
-import productLaptop from '@/assets/product-laptop.jpg';
-import productSecuritySystem from '@/assets/product-security-system.jpg';
-import productDrone from '@/assets/product-drone.jpg';
-import productSoundSystem from '@/assets/product-sound-system.jpg';
-import productSmartTV from '@/assets/product-smart-tv.jpg';
+import productUITemplate from '@/assets/product-ui-template.jpg';
+import productWebsiteTemplate from '@/assets/product-website-template.jpg';
+import productMobileUI from '@/assets/product-mobile-ui.jpg';
+import productEcommerceDesign from '@/assets/product-ecommerce-design.jpg';
+import productDashboardUI from '@/assets/product-dashboard-ui.jpg';
+import productSaasTemplate from '@/assets/product-saas-template.jpg';
+import productPortfolioDesign from '@/assets/product-portfolio-design.jpg';
+import productCorporateDesign from '@/assets/product-corporate-design.jpg';
+import productBlogDesign from '@/assets/product-blog-design.jpg';
 
 export const products: Product[] = [
   {
     id: '1',
-    name: 'Premium Wireless Earbuds',
+    name: 'Premium UI/UX Design Template',
     price: 299,
-    description: 'High-quality wireless earbuds with noise cancellation and premium sound quality. Perfect for music lovers and professionals.',
-    image: productEarbuds,
-    category: 'Electronics',
+    description: 'Modern and elegant UI/UX design template with professional dashboard interface, clean typography, and premium color schemes. Perfect for web applications.',
+    image: productUITemplate,
+    category: 'UI Templates',
     inStock: true,
     featured: true,
   },
   {
     id: '2',
-    name: 'Smart Fitness Tracker',
+    name: 'Responsive Website Template',
     price: 599,
-    description: 'Advanced fitness tracking with heart rate monitoring, GPS, and 7-day battery life. Track your health goals effectively.',
-    image: productFitnessTracker,
-    category: 'Wearables',
+    description: 'Professional website design template with modern landing page layout, responsive design, and clean sections. Ready to use for any business.',
+    image: productWebsiteTemplate,
+    category: 'Website Templates',
     inStock: true,
     featured: true,
   },
   {
     id: '3',
-    name: 'Professional Camera Lens',
+    name: 'Mobile App UI Kit',
     price: 6999,
-    description: 'Ultra-wide professional camera lens with superior optical quality. Perfect for photography enthusiasts and professionals.',
-    image: productCameraLens,
-    category: 'Photography',
+    description: 'Complete mobile app UI design kit with elegant interface screens, modern components, and premium design system. iOS and Android compatible.',
+    image: productMobileUI,
+    category: 'Mobile Design',
     inStock: true,
     featured: true,
   },
   {
     id: '4',
-    name: 'Gaming Mechanical Keyboard',
+    name: 'E-commerce Web Design',
     price: 9799,
-    description: 'RGB mechanical gaming keyboard with tactile switches and customizable backlight. Enhanced gaming experience guaranteed.',
-    image: productGamingKeyboard,
-    category: 'Gaming',
+    description: 'Professional e-commerce web design template with product showcase, shopping cart interface, and modern layout. Conversion optimized.',
+    image: productEcommerceDesign,
+    category: 'E-commerce Design',
     inStock: true,
     featured: false,
   },
   {
     id: '5',
-    name: 'Ultrabook Pro Laptop',
+    name: 'Admin Dashboard Template',
     price: 12799,
-    description: 'Powerful ultrabook with latest processor, 16GB RAM, and stunning display. Perfect for work and creative projects.',
-    image: productLaptop,
-    category: 'Computers',
+    description: 'Advanced admin dashboard UI template with charts, analytics interface, modern dark theme layout. Fully responsive and customizable.',
+    image: productDashboardUI,
+    category: 'Dashboard Design',
     inStock: true,
     featured: true,
   },
   {
     id: '6',
-    name: 'Smart Home Security System',
+    name: 'SaaS Landing Page Design',
     price: 4999,
-    description: 'Complete home security system with cameras, sensors, and mobile app control. Keep your home safe and secure.',
-    image: productSecuritySystem,
-    category: 'Smart Home',
+    description: 'Modern SaaS landing page design template with pricing tables, feature sections, and professional layout. High conversion focused.',
+    image: productSaasTemplate,
+    category: 'Landing Pages',
     inStock: true,
     featured: false,
   },
   {
     id: '7',
-    name: 'Professional Drone 4K',
+    name: 'Portfolio Website Design',
     price: 28750,
-    description: 'High-end drone with 4K camera, gimbal stabilization, and intelligent flight modes. Perfect for aerial photography.',
-    image: productDrone,
-    category: 'Drones',
+    description: 'Creative portfolio website design template with project showcase, modern typography, and elegant layout. Perfect for designers and agencies.',
+    image: productPortfolioDesign,
+    category: 'Portfolio Design',
     inStock: true,
     featured: true,
   },
   {
     id: '8',
-    name: 'Premium Sound System',
+    name: 'Corporate Website Template',
     price: 29900,
-    description: 'Audiophile-grade sound system with wireless connectivity and room-filling sound. Experience music like never before.',
-    image: productSoundSystem,
-    category: 'Audio',
+    description: 'Professional corporate website design template with business sections, elegant design system, and modern layout. Enterprise ready.',
+    image: productCorporateDesign,
+    category: 'Corporate Design',
     inStock: true,
     featured: false,
   },
   {
     id: '9',
-    name: 'Smart TV 65" OLED',
+    name: 'Blog Website Template',
     price: 34900,
-    description: 'Premium 65-inch OLED smart TV with 4K HDR, smart features, and stunning picture quality. Cinema experience at home.',
-    image: productSmartTV,
-    category: 'Electronics',
+    description: 'Modern blog website design template with article layouts, typography system, and clean reading experience. SEO optimized and fast loading.',
+    image: productBlogDesign,
+    category: 'Blog Design',
     inStock: true,
     featured: true,
   },

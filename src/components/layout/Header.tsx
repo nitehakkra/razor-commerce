@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Search, Menu, User } from 'lucide-react';
+import { ShoppingCart, Search, Menu, User, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/contexts/CartContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 import brandLogo from '@/assets/brand-logo.jpg';
 
 const Header: React.FC = () => {
   const { itemCount } = useCart();
   const location = useLocation();
+  const isMobile = useIsMobile();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isActiveRoute = (path: string) => {
     return location.pathname === path;
@@ -26,8 +29,8 @@ const Header: React.FC = () => {
               alt="Premium Store" 
               className="w-8 h-8 md:w-10 md:h-10 object-contain"
             />
-            <span className="font-display font-bold text-xl md:text-2xl text-gradient">
-              PremiumStore
+            <span className="font-display font-bold text-lg md:text-xl lg:text-2xl text-gradient">
+              DesignCraft
             </span>
           </Link>
 
@@ -47,7 +50,7 @@ const Header: React.FC = () => {
                 isActiveRoute('/products') ? 'text-accent' : 'text-foreground'
               }`}
             >
-              Products
+              Templates
             </Link>
             <Link
               to="/about"
@@ -72,7 +75,7 @@ const Header: React.FC = () => {
             <div className="relative w-full">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search products..."
+                placeholder="Search templates..."
                 className="pl-8 bg-muted/50 border-border focus:bg-background"
               />
             </div>
@@ -106,11 +109,73 @@ const Header: React.FC = () => {
             </Button>
 
             {/* Mobile Menu */}
-            <Button variant="ghost" size="sm" className="md:hidden">
-              <Menu className="h-5 w-5" />
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="md:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-sm">
+            <nav className="container-responsive py-4">
+              <div className="flex flex-col space-y-4">
+                <Link
+                  to="/"
+                  className={`text-sm font-medium transition-colors hover:text-accent px-4 py-2 rounded-md ${
+                    isActiveRoute('/') ? 'text-accent bg-accent/10' : 'text-foreground'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/products"
+                  className={`text-sm font-medium transition-colors hover:text-accent px-4 py-2 rounded-md ${
+                    isActiveRoute('/products') ? 'text-accent bg-accent/10' : 'text-foreground'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Templates
+                </Link>
+                <Link
+                  to="/about"
+                  className={`text-sm font-medium transition-colors hover:text-accent px-4 py-2 rounded-md ${
+                    isActiveRoute('/about') ? 'text-accent bg-accent/10' : 'text-foreground'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  About
+                </Link>
+                <Link
+                  to="/contact"
+                  className={`text-sm font-medium transition-colors hover:text-accent px-4 py-2 rounded-md ${
+                    isActiveRoute('/contact') ? 'text-accent bg-accent/10' : 'text-foreground'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Contact
+                </Link>
+                
+                {/* Mobile Search */}
+                <div className="px-4 pt-2">
+                  <div className="relative">
+                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search templates..."
+                      className="pl-8 bg-muted/50 border-border focus:bg-background"
+                    />
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        )}
       </div>
     </header>
   );

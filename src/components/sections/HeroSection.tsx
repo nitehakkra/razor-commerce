@@ -24,32 +24,32 @@ const HeroSection: React.FC = () => {
             {/* Badge */}
             <div className="inline-flex items-center space-x-2 bg-accent/20 backdrop-blur-sm rounded-full px-4 py-2 border border-accent/30">
               <Star className="h-4 w-4 text-accent fill-current" />
-              <span className="text-sm font-medium text-primary-foreground">Premium Quality Guaranteed</span>
+              <span className="text-sm font-medium text-primary-foreground">Professional Design Templates</span>
             </div>
 
             {/* Heading */}
             <div className="space-y-4">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-primary-foreground leading-tight">
-                Discover
-                <span className="block text-gradient">Premium Products</span>
-                <span className="block">at Unbeatable Prices</span>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold text-primary-foreground leading-tight">
+                Premium
+                <span className="block text-gradient">Web Design</span>
+                <span className="block">Templates</span>
               </h1>
-              <p className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl leading-relaxed">
-                Experience luxury and quality with our curated collection of premium electronics, 
-                gadgets, and lifestyle products. Fast shipping, secure payments, and exceptional service.
+              <p className="text-base md:text-lg lg:text-xl text-primary-foreground/80 max-w-2xl leading-relaxed">
+                Transform your digital presence with our collection of modern, responsive web design templates. 
+                Built for performance, designed for conversion.
               </p>
             </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link to="/products">
-                <Button className="btn-hero group">
-                  Shop Now
+                <Button className="btn-hero group w-full sm:w-auto">
+                  Browse Templates
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
-              <Button variant="outline" className="bg-white/10 backdrop-blur-sm border-white/30 text-primary-foreground hover:bg-white/20">
-                View Collection
+              <Button variant="outline" className="bg-white/10 backdrop-blur-sm border-white/30 text-primary-foreground hover:bg-white/20 w-full sm:w-auto">
+                View Demos
               </Button>
             </div>
 
@@ -70,7 +70,7 @@ const HeroSection: React.FC = () => {
                 </div>
                 <div>
                   <p className="font-semibold text-primary-foreground text-sm">Fast Delivery</p>
-                  <p className="text-primary-foreground/60 text-xs">2-5 business days</p>
+                  <p className="text-primary-foreground/60 text-xs">Download instantly</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3 justify-center lg:justify-start">
@@ -78,8 +78,8 @@ const HeroSection: React.FC = () => {
                   <Star className="h-5 w-5 text-accent fill-current" />
                 </div>
                 <div>
-                  <p className="font-semibold text-primary-foreground text-sm">Premium Quality</p>
-                  <p className="text-primary-foreground/60 text-xs">Guaranteed satisfaction</p>
+                  <p className="font-semibold text-primary-foreground text-sm">Modern Design</p>
+                  <p className="text-primary-foreground/60 text-xs">Mobile responsive</p>
                 </div>
               </div>
             </div>
@@ -89,20 +89,20 @@ const HeroSection: React.FC = () => {
           <div className="hidden lg:flex flex-col justify-center space-y-8">
             <div className="grid grid-cols-2 gap-6">
               <div className="glass-effect rounded-2xl p-6 text-center">
-                <h3 className="text-3xl font-bold text-accent">500+</h3>
-                <p className="text-primary-foreground/80">Premium Products</p>
+                <h3 className="text-2xl md:text-3xl font-bold text-accent">200+</h3>
+                <p className="text-primary-foreground/80 text-sm">Design Templates</p>
               </div>
-              <div className="glass-effect rounded-2xl p-6 text-center">
-                <h3 className="text-3xl font-bold text-accent">50k+</h3>
-                <p className="text-primary-foreground/80">Happy Customers</p>
+              <div className="glass-effect rounded-2xl p-4 md:p-6 text-center">
+                <h3 className="text-2xl md:text-3xl font-bold text-accent">5k+</h3>
+                <p className="text-primary-foreground/80 text-sm">Happy Clients</p>
               </div>
-              <div className="glass-effect rounded-2xl p-6 text-center">
-                <h3 className="text-3xl font-bold text-accent">4.9★</h3>
-                <p className="text-primary-foreground/80">Customer Rating</p>
+              <div className="glass-effect rounded-2xl p-4 md:p-6 text-center">
+                <h3 className="text-2xl md:text-3xl font-bold text-accent">4.9★</h3>
+                <p className="text-primary-foreground/80 text-sm">Average Rating</p>
               </div>
-              <div className="glass-effect rounded-2xl p-6 text-center">
-                <h3 className="text-3xl font-bold text-accent">24/7</h3>
-                <p className="text-primary-foreground/80">Support Available</p>
+              <div className="glass-effect rounded-2xl p-4 md:p-6 text-center">
+                <h3 className="text-2xl md:text-3xl font-bold text-accent">24/7</h3>
+                <p className="text-primary-foreground/80 text-sm">Design Support</p>
               </div>
             </div>
           </div>

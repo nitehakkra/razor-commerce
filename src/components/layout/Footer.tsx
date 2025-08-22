@@ -20,12 +20,12 @@ const Footer: React.FC = () => {
                 className="w-8 h-8 object-contain brightness-0 invert"
               />
               <span className="font-display font-bold text-xl text-accent">
-                PremiumStore
+                DesignCraft
               </span>
             </div>
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
-              Your trusted partner for premium products and luxury electronics. 
-              We deliver quality, excellence, and exceptional customer service.
+              Your trusted partner for premium web design templates and UI/UX solutions. 
+              We deliver modern, responsive designs for your digital success.
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="sm" className="text-primary-foreground/60 hover:text-accent p-2">
@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
                 Home
               </Link>
               <Link to="/products" className="text-sm text-primary-foreground/80 hover:text-accent transition-colors">
-                All Products
+                All Templates
               </Link>
               <Link to="/about" className="text-sm text-primary-foreground/80 hover:text-accent transition-colors">
                 About Us
@@ -59,11 +59,11 @@ const Footer: React.FC = () => {
               <Link to="/contact" className="text-sm text-primary-foreground/80 hover:text-accent transition-colors">
                 Contact
               </Link>
-              <Link to="/privacy" className="text-sm text-primary-foreground/80 hover:text-accent transition-colors">
+              <Link to="/privacy-policy" className="text-sm text-primary-foreground/80 hover:text-accent transition-colors">
                 Privacy Policy
               </Link>
-              <Link to="/terms" className="text-sm text-primary-foreground/80 hover:text-accent transition-colors">
-                Terms of Service
+              <Link to="/terms-conditions" className="text-sm text-primary-foreground/80 hover:text-accent transition-colors">
+                Terms & Conditions
               </Link>
             </nav>
           </div>
@@ -102,7 +102,7 @@ const Footer: React.FC = () => {
           <div className="space-y-4">
             <h3 className="font-semibold text-lg text-accent">Stay Updated</h3>
             <p className="text-sm text-primary-foreground/80">
-              Subscribe to get special offers, updates, and exclusive deals.
+              Subscribe to get new templates, design tips, and exclusive deals.
             </p>
             <div className="space-y-3">
               <Input
@@ -121,7 +121,7 @@ const Footer: React.FC = () => {
         <div className="border-t border-primary-foreground/20 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm text-primary-foreground/60">
-              © 2024 PremiumStore. All rights reserved.
+              © 2024 DesignCraft. All rights reserved.
             </p>
             <div className="flex items-center space-x-6 text-sm text-primary-foreground/60">
               <span>Secure payments powered by</span>
