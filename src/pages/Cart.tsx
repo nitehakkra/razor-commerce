@@ -76,15 +76,15 @@ const Cart: React.FC = () => {
             <p className="text-muted-foreground">Review your items and proceed to checkout</p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-4">
               {items.map((item) => (
                 <Card key={item.id} className="card-elegant">
-                  <CardContent className="p-6">
-                    <div className="flex flex-col md:flex-row gap-4">
+                  <CardContent className="p-4 md:p-6">
+                    <div className="flex flex-col sm:flex-row gap-4">
                       {/* Product Image */}
-                      <div className="w-full md:w-32 aspect-square overflow-hidden rounded-lg bg-muted flex-shrink-0">
+                      <div className="w-full sm:w-24 md:w-32 aspect-square overflow-hidden rounded-lg bg-muted flex-shrink-0">
                         <img
                           src={item.image}
                           alt={item.name}
@@ -94,13 +94,13 @@ const Cart: React.FC = () => {
 
                       {/* Product Details */}
                       <div className="flex-1 space-y-3">
-                        <div className="flex justify-between items-start">
-                          <div className="space-y-1">
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+                          <div className="space-y-1 min-w-0 flex-1">
                             <Badge variant="secondary" className="text-xs">
                               {item.category}
                             </Badge>
                             <Link to={`/product/${item.id}`}>
-                              <h3 className="font-semibold text-lg hover:text-accent transition-colors">
+                              <h3 className="font-semibold text-base md:text-lg hover:text-accent transition-colors line-clamp-2">
                                 {item.name}
                               </h3>
                             </Link>
@@ -112,15 +112,15 @@ const Cart: React.FC = () => {
                             variant="ghost"
                             size="sm"
                             onClick={() => removeItem(item.id)}
-                            className="text-muted-foreground hover:text-destructive"
+                            className="text-muted-foreground hover:text-destructive shrink-0"
                           >
                             <X className="h-4 w-4" />
                           </Button>
                         </div>
 
                         {/* Quantity and Price */}
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                          <div className="flex items-center justify-between sm:justify-start sm:space-x-3">
                             <span className="text-sm text-muted-foreground">Quantity:</span>
                             <div className="flex items-center border border-border rounded-md">
                               <Button
@@ -145,8 +145,8 @@ const Cart: React.FC = () => {
                             </div>
                           </div>
 
-                          <div className="text-right">
-                            <p className="text-lg font-bold">
+                          <div className="text-right sm:text-left">
+                            <p className="text-lg md:text-xl font-bold">
                               {formatCurrency(item.price * item.quantity)}
                             </p>
                             <p className="text-sm text-muted-foreground">
@@ -173,10 +173,10 @@ const Cart: React.FC = () => {
             </div>
 
             {/* Order Summary */}
-            <div className="space-y-6">
-              <Card className="card-elegant sticky top-24">
-                <CardContent className="p-6 space-y-6">
-                  <h3 className="text-xl font-semibold">Order Summary</h3>
+            <div className="space-y-4 md:space-y-6">
+              <Card className="card-elegant lg:sticky lg:top-24">
+                <CardContent className="p-4 md:p-6 space-y-4 md:space-y-6">
+                  <h3 className="text-lg md:text-xl font-semibold">Order Summary</h3>
                   
                   <div className="space-y-3">
                     <div className="flex justify-between text-sm">
@@ -208,7 +208,7 @@ const Cart: React.FC = () => {
                   </div>
 
                   <Button 
-                    className="w-full btn-hero"
+                    className="w-full btn-hero h-12"
                     onClick={handleCheckout}
                   >
                     <CreditCard className="mr-2 h-4 w-4" />
@@ -220,7 +220,7 @@ const Cart: React.FC = () => {
                     <div className="text-center text-xs text-muted-foreground">
                       Secure checkout powered by Razorpay
                     </div>
-                    <div className="flex justify-center space-x-4">
+                    <div className="flex flex-wrap justify-center gap-2">
                       <Badge variant="outline" className="text-xs">
                         256-bit SSL
                       </Badge>
@@ -237,7 +237,7 @@ const Cart: React.FC = () => {
 
               {/* Shipping Info */}
               <Card className="card-elegant">
-                <CardContent className="p-6">
+                <CardContent className="p-4 md:p-6">
                   <h4 className="font-semibold mb-3">Delivery Information</h4>
                   <div className="text-sm text-muted-foreground space-y-2">
                     <p>• Instant download after purchase</p>

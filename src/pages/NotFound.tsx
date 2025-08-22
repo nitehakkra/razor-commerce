@@ -20,24 +20,24 @@ const NotFound = () => {
       <Header />
       <main className="section-padding">
         <div className="container-responsive">
-          <div className="max-w-2xl mx-auto text-center space-y-8 py-16">
+          <div className="max-w-2xl mx-auto text-center space-y-6 md:space-y-8 py-12 md:py-16 px-4">
             <div className="space-y-4">
-              <h1 className="text-6xl md:text-8xl font-display font-bold text-gradient">404</h1>
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">Page Not Found</h2>
-              <p className="text-lg text-muted-foreground">
+              <h1 className="text-4xl sm:text-6xl md:text-8xl font-display font-bold text-gradient">404</h1>
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold text-foreground">Page Not Found</h2>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                 Oops! The page you're looking for doesn't exist. 
                 It might have been moved, deleted, or you entered the wrong URL.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/">
-                <Button className="btn-hero">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+              <Link to="/" className="w-full sm:w-auto">
+                <Button className="btn-hero w-full sm:w-auto h-12">
                   Return to Home
                 </Button>
               </Link>
-              <Link to="/products">
-                <Button variant="outline">
+              <Link to="/products" className="w-full sm:w-auto">
+                <Button variant="outline" className="w-full sm:w-auto h-12">
                   Browse Products
                 </Button>
               </Link>

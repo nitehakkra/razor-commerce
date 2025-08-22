@@ -8,17 +8,17 @@ const PrivacyPolicy = () => {
       <Header />
       <main className="section-padding">
         <div className="container-responsive max-w-4xl">
-          <div className="space-y-8">
+          <div className="space-y-6 md:space-y-8">
             <div className="text-center space-y-4">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-display font-bold text-foreground">
                 Privacy Policy
               </h1>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-base md:text-lg text-muted-foreground px-4">
                 Your privacy is important to us. This policy explains how we collect and use your information.
               </p>
             </div>
 
-            <div className="prose prose-neutral dark:prose-invert max-w-none">
+            <div className="prose prose-neutral dark:prose-invert max-w-none prose-sm md:prose-base">
               <section className="space-y-4">
                 <h2 className="text-2xl font-display font-semibold text-foreground">Information We Collect</h2>
                 <p className="text-muted-foreground">

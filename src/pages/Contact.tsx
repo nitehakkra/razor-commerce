@@ -13,19 +13,19 @@ const Contact = () => {
       <Header />
       <main className="section-padding">
         <div className="container-responsive">
-          <div className="space-y-16">
+          <div className="space-y-12 md:space-y-16">
             {/* Header Section */}
             <div className="text-center space-y-4">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground">
+              <h1 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold text-foreground">
                 Get in <span className="text-gradient">Touch</span>
               </h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
                 Need help with our web design templates? Have questions about licensing? 
                 Our support team is here to help you succeed.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
               {/* Contact Information */}
               <div className="lg:col-span-1 space-y-6">
                 <Card className="card-elegant">
