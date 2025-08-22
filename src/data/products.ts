@@ -1,4 +1,5 @@
 import { Product } from '@/types/product';
+import { generateRandomReviews, calculateAverageRating } from '@/lib/utils';
 import productUITemplate from '@/assets/product-ui-template.jpg';
 import productWebsiteTemplate from '@/assets/product-website-template.jpg';
 import productMobileUI from '@/assets/product-mobile-ui.jpg';
@@ -9,8 +10,21 @@ import productPortfolioDesign from '@/assets/product-portfolio-design.jpg';
 import productCorporateDesign from '@/assets/product-corporate-design.jpg';
 import productBlogDesign from '@/assets/product-blog-design.jpg';
 
+// Generate products with randomized reviews
+const generateProductWithReviews = (productData: Omit<Product, 'rating' | 'reviewCount' | 'reviews'>): Product => {
+  const reviews = generateRandomReviews(productData.id);
+  const rating = calculateAverageRating(reviews);
+  
+  return {
+    ...productData,
+    rating,
+    reviewCount: reviews.length,
+    reviews
+  };
+};
+
 export const products: Product[] = [
-  {
+  generateProductWithReviews({
     id: '1',
     name: 'Premium UI/UX Design Template',
     price: 299,
@@ -19,8 +33,8 @@ export const products: Product[] = [
     category: 'UI Templates',
     inStock: true,
     featured: true,
-  },
-  {
+  }),
+  generateProductWithReviews({
     id: '2',
     name: 'Responsive Website Template',
     price: 599,
@@ -29,8 +43,8 @@ export const products: Product[] = [
     category: 'Website Templates',
     inStock: true,
     featured: true,
-  },
-  {
+  }),
+  generateProductWithReviews({
     id: '3',
     name: 'Mobile App UI Kit',
     price: 6999,
@@ -39,8 +53,8 @@ export const products: Product[] = [
     category: 'Mobile Design',
     inStock: true,
     featured: true,
-  },
-  {
+  }),
+  generateProductWithReviews({
     id: '4',
     name: 'E-commerce Web Design',
     price: 9799,
@@ -49,8 +63,8 @@ export const products: Product[] = [
     category: 'E-commerce Design',
     inStock: true,
     featured: false,
-  },
-  {
+  }),
+  generateProductWithReviews({
     id: '5',
     name: 'Admin Dashboard Template',
     price: 12799,
@@ -59,8 +73,8 @@ export const products: Product[] = [
     category: 'Dashboard Design',
     inStock: true,
     featured: true,
-  },
-  {
+  }),
+  generateProductWithReviews({
     id: '6',
     name: 'SaaS Landing Page Design',
     price: 4999,
@@ -69,8 +83,8 @@ export const products: Product[] = [
     category: 'Landing Pages',
     inStock: true,
     featured: false,
-  },
-  {
+  }),
+  generateProductWithReviews({
     id: '7',
     name: 'Portfolio Website Design',
     price: 28750,
@@ -79,8 +93,8 @@ export const products: Product[] = [
     category: 'Portfolio Design',
     inStock: true,
     featured: true,
-  },
-  {
+  }),
+  generateProductWithReviews({
     id: '8',
     name: 'Corporate Website Template',
     price: 29900,
@@ -89,8 +103,8 @@ export const products: Product[] = [
     category: 'Corporate Design',
     inStock: true,
     featured: false,
-  },
-  {
+  }),
+  generateProductWithReviews({
     id: '9',
     name: 'Blog Website Template',
     price: 34900,
@@ -99,7 +113,7 @@ export const products: Product[] = [
     category: 'Blog Design',
     inStock: true,
     featured: true,
-  },
+  }),
 ];
 
 export const getFeaturedProducts = () => products.filter(p => p.featured);

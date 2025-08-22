@@ -92,10 +92,11 @@ const ProductDetail: React.FC = () => {
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 text-accent fill-current" />
+                      <Star key={i} className={`h-5 w-5 ${i < Math.floor(product.rating) ? 'text-accent fill-current' : 'text-muted-foreground'}`} />
                     ))}
+                    <span className="text-sm font-medium ml-2">{product.rating}</span>
                   </div>
-                  <span className="text-sm text-muted-foreground">(124 reviews)</span>
+                  <span className="text-sm text-muted-foreground">({product.reviewCount} reviews)</span>
                 </div>
               </div>
 
@@ -209,6 +210,48 @@ const ProductDetail: React.FC = () => {
                   </div>
                 </CardContent>
               </Card>
+            </div>
+          </div>
+
+          {/* Reviews Section */}
+          <div className="mt-16">
+            <h2 className="text-2xl font-bold mb-8">Customer Reviews</h2>
+            <div className="grid gap-6">
+              {product.reviews.slice(0, Math.min(9, product.reviews.length)).map((review) => (
+                <Card key={review.id} className="card-elegant">
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center">
+                          <span className="font-semibold text-accent">
+                            {review.userName.split(' ').map(n => n[0]).join('')}
+                          </span>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold">{review.userName}</h4>
+                          <div className="flex items-center space-x-2">
+                            <div className="flex items-center space-x-1">
+                              {[...Array(5)].map((_, i) => (
+                                <Star 
+                                  key={i} 
+                                  className={`h-4 w-4 ${i < review.rating ? 'text-accent fill-current' : 'text-muted-foreground'}`} 
+                                />
+                              ))}
+                            </div>
+                            {review.verified && (
+                              <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                                Verified Purchase
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <span className="text-sm text-muted-foreground">{review.date}</span>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed">{review.comment}</p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </div>

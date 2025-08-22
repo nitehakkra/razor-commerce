@@ -54,7 +54,7 @@ const FeaturedProducts: React.FC = () => {
                     </Badge>
                     <div className="flex items-center space-x-1 text-accent">
                       <Star className="h-4 w-4 fill-current" />
-                      <span className="text-sm font-medium">4.8</span>
+                      <span className="text-sm font-medium">{product.rating}</span>
                     </div>
                   </div>
                   <h3 className="font-semibold text-lg leading-tight group-hover:text-accent transition-colors">
