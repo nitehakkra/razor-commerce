@@ -1,83 +1,158 @@
-import React from 'react';
-import { Mail, Phone, MessageCircle, Clock, HeadphonesIcon } from 'lucide-react';
+
+import React, { useState } from 'react';
+import { Mail, Phone, MessageCircle, Clock, HeadphonesIcon, Send, CheckCircle } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Button } from '@/components/ui/button';
+import { LoadingButton } from '@/components/ui/loading';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { toast } from 'sonner';
 
 const Contact = () => {
+  const [contactForm, setContactForm] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [contactLoading, setContactLoading] = useState(false);
+  const [newsletterLoading, setNewsletterLoading] = useState(false);
+  const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setContactLoading(true);
+
+    // Simulate form submission
+    setTimeout(() => {
+      setContactSubmitted(true);
+      setContactLoading(false);
+      toast.success('Message sent successfully! We\'ll get back to you within 24 hours.');
+      setContactForm({ name: '', email: '', subject: '', message: '' });
+    }, 2000);
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setNewsletterLoading(true);
+
+    // Simulate newsletter subscription
+    setTimeout(() => {
+      setNewsletterSubmitted(true);
+      setNewsletterLoading(false);
+      toast.success('Successfully subscribed to our newsletter!');
+      setNewsletterEmail('');
+    }, 1500);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main className="section-padding">
         <div className="container-responsive">
-          <div className="space-y-12 md:space-y-16">
+          <div className="space-y-8 md:space-y-12 lg:space-y-16">
             {/* Header Section */}
-            <div className="text-center space-y-4">
-              <h1 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold text-foreground">
+            <div className="text-center space-y-3 md:space-y-4">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-display font-bold text-foreground">
                 Get in <span className="text-gradient">Touch</span>
               </h1>
-              <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
-                Need help with our web design templates? Have questions about licensing? 
+              <p className="text-sm md:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto px-4 leading-relaxed">
+                Need help with our web design templates? Have questions about custom projects? 
                 Our support team is here to help you succeed.
               </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
               {/* Contact Information */}
-              <div className="lg:col-span-1 space-y-6">
+              <div className="lg:col-span-1 space-y-4 md:space-y-6">
                 <Card className="card-elegant">
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2 text-accent">
-                      <Mail className="h-5 w-5" />
+                  <CardHeader className="pb-3 md:pb-4">
+                    <CardTitle className="flex items-center space-x-2 md:space-x-3 text-accent text-base md:text-lg">
+                      <Mail className="h-4 w-4 md:h-5 md:w-5" />
                       <span>Email Support</span>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-3">
+                  <CardContent className="space-y-3 md:space-y-4">
                     <div className="space-y-2">
-                      <p className="text-sm text-muted-foreground">Primary Support:</p>
-                      <p className="text-foreground font-medium">maklesurrahaman39@outlook.com</p>
+                      <p className="text-xs md:text-sm text-muted-foreground">Primary Support:</p>
+                      <p className="text-foreground font-medium text-sm md:text-base break-all">maklesurrahaman39@outlook.com</p>
                     </div>
                     <div className="space-y-2">
-                      <p className="text-sm text-muted-foreground">Secondary Support:</p>
-                      <p className="text-foreground font-medium">alexbotix@outlook.com</p>
+                      <p className="text-xs md:text-sm text-muted-foreground">Secondary Support:</p>
+                      <p className="text-foreground font-medium text-sm md:text-base break-all">alexbotix@outlook.com</p>
                     </div>
                   </CardContent>
                 </Card>
 
                 <Card className="card-elegant">
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2 text-accent">
-                      <Phone className="h-5 w-5" />
+                  <CardHeader className="pb-3 md:pb-4">
+                    <CardTitle className="flex items-center space-x-2 md:space-x-3 text-accent text-base md:text-lg">
+                      <Phone className="h-4 w-4 md:h-5 md:w-5" />
                       <span>Phone Support</span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-foreground font-medium text-lg">+91 8370030184</p>
-                    <p className="text-sm text-muted-foreground mt-2">
+                    <p className="text-foreground font-medium text-base md:text-lg">+91 8370030184</p>
+                    <p className="text-xs md:text-sm text-muted-foreground mt-2">
                       Available Monday - Friday, 9 AM - 6 PM IST
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card className="card-elegant">
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2 text-accent">
-                      <Clock className="h-5 w-5" />
+                  <CardHeader className="pb-3 md:pb-4">
+                    <CardTitle className="flex items-center space-x-2 md:space-x-3 text-accent text-base md:text-lg">
+                      <Clock className="h-4 w-4 md:h-5 md:w-5" />
                       <span>Response Time</span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2">
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Email:</span>
-                      <span className="text-sm text-foreground">Within 24 hours</span>
+                      <span className="text-xs md:text-sm text-muted-foreground">Email:</span>
+                      <span className="text-xs md:text-sm text-foreground">Within 24 hours</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Phone:</span>
-                      <span className="text-sm text-foreground">Immediate</span>
+                      <span className="text-xs md:text-sm text-muted-foreground">Phone:</span>
+                      <span className="text-xs md:text-sm text-foreground">Immediate</span>
                     </div>
+                  </CardContent>
+                </Card>
+
+                {/* Newsletter Subscription */}
+                <Card className="card-elegant">
+                  <CardHeader className="pb-3 md:pb-4">
+                    <CardTitle className="text-base md:text-lg text-foreground">Stay Updated</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+                      <Input
+                        type="email"
+                        placeholder="Your email address"
+                        value={newsletterEmail}
+                        onChange={(e) => setNewsletterEmail(e.target.value)}
+                        required
+                        className="text-sm"
+                        disabled={newsletterSubmitted}
+                      />
+                      <LoadingButton
+                        loading={newsletterLoading}
+                        className="w-full bg-accent hover:bg-accent-glow text-accent-foreground text-sm py-2"
+                        disabled={newsletterSubmitted}
+                      >
+                        {newsletterSubmitted ? (
+                          <>
+                            <CheckCircle className="mr-2 h-4 w-4" />
+                            Subscribed!
+                          </>
+                        ) : (
+                          'Subscribe to Newsletter'
+                        )}
+                      </LoadingButton>
+                    </form>
                   </CardContent>
                 </Card>
               </div>
@@ -85,26 +160,41 @@ const Contact = () => {
               {/* Contact Form */}
               <div className="lg:col-span-2">
                 <Card className="card-elegant">
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <MessageCircle className="h-5 w-5 text-accent" />
+                  <CardHeader className="pb-4 md:pb-6">
+                    <CardTitle className="flex items-center space-x-2 md:space-x-3 text-base md:text-lg">
+                      <MessageCircle className="h-4 w-4 md:h-5 md:w-5 text-accent" />
                       <span>Send us a Message</span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <form className="space-y-6">
+                    <form onSubmit={handleContactSubmit} className="space-y-4 md:space-y-6">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <label className="text-sm font-medium text-foreground">
                             Full Name *
                           </label>
-                          <Input placeholder="Your full name" />
+                          <Input 
+                            placeholder="Your full name" 
+                            value={contactForm.name}
+                            onChange={(e) => setContactForm({...contactForm, name: e.target.value})}
+                            required
+                            className="text-sm"
+                            disabled={contactSubmitted}
+                          />
                         </div>
                         <div className="space-y-2">
                           <label className="text-sm font-medium text-foreground">
                             Email Address *
                           </label>
-                          <Input type="email" placeholder="your@email.com" />
+                          <Input 
+                            type="email" 
+                            placeholder="your@email.com" 
+                            value={contactForm.email}
+                            onChange={(e) => setContactForm({...contactForm, email: e.target.value})}
+                            required
+                            className="text-sm"
+                            disabled={contactSubmitted}
+                          />
                         </div>
                       </div>
                       
@@ -112,7 +202,14 @@ const Contact = () => {
                         <label className="text-sm font-medium text-foreground">
                           Subject *
                         </label>
-                        <Input placeholder="What's this about?" />
+                        <Input 
+                          placeholder="What's this about?" 
+                          value={contactForm.subject}
+                          onChange={(e) => setContactForm({...contactForm, subject: e.target.value})}
+                          required
+                          className="text-sm"
+                          disabled={contactSubmitted}
+                        />
                       </div>
                       
                       <div className="space-y-2">
@@ -121,14 +218,31 @@ const Contact = () => {
                         </label>
                         <Textarea 
                           placeholder="Tell us more about your question or concern..."
-                          className="min-h-[120px]"
+                          className="min-h-[100px] md:min-h-[120px] text-sm resize-none"
+                          value={contactForm.message}
+                          onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
+                          required
+                          disabled={contactSubmitted}
                         />
                       </div>
                       
-                      <Button className="btn-hero w-full md:w-auto">
-                        <HeadphonesIcon className="mr-2 h-4 w-4" />
-                        Send Message
-                      </Button>
+                      <LoadingButton
+                        loading={contactLoading}
+                        className="btn-hero w-full md:w-auto"
+                        disabled={contactSubmitted}
+                      >
+                        {contactSubmitted ? (
+                          <>
+                            <CheckCircle className="mr-2 h-4 w-4" />
+                            Message Sent!
+                          </>
+                        ) : (
+                          <>
+                            <Send className="mr-2 h-4 w-4" />
+                            Send Message
+                          </>
+                        )}
+                      </LoadingButton>
                     </form>
                   </CardContent>
                 </Card>
@@ -136,23 +250,23 @@ const Contact = () => {
             </div>
 
             {/* FAQ Section */}
-            <div className="space-y-8">
+            <div className="space-y-6 md:space-y-8">
               <div className="text-center">
-                <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4">
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-display font-bold text-foreground mb-3 md:mb-4">
                   Frequently Asked Questions
                 </h2>
-                <p className="text-muted-foreground">
+                <p className="text-sm md:text-base text-muted-foreground">
                   Quick answers to common questions about our web design templates
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <Card className="card-elegant">
-                  <CardHeader>
-                    <CardTitle className="text-lg">Can I use templates for commercial projects?</CardTitle>
+                  <CardHeader className="pb-3 md:pb-4">
+                    <CardTitle className="text-base md:text-lg">Can I use templates for commercial projects?</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">
+                    <p className="text-sm md:text-base text-muted-foreground">
                       Yes! All our templates come with commercial licenses, allowing you to use them 
                       for client projects and commercial websites without additional fees.
                     </p>
@@ -160,11 +274,11 @@ const Contact = () => {
                 </Card>
 
                 <Card className="card-elegant">
-                  <CardHeader>
-                    <CardTitle className="text-lg">Do you provide customization services?</CardTitle>
+                  <CardHeader className="pb-3 md:pb-4">
+                    <CardTitle className="text-base md:text-lg">Do you provide customization services?</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">
+                    <p className="text-sm md:text-base text-muted-foreground">
                       Our templates are designed to be easily customizable. For extensive custom work, 
                       please contact us to discuss your specific requirements and pricing.
                     </p>
@@ -172,11 +286,11 @@ const Contact = () => {
                 </Card>
 
                 <Card className="card-elegant">
-                  <CardHeader>
-                    <CardTitle className="text-lg">What files do I get with my purchase?</CardTitle>
+                  <CardHeader className="pb-3 md:pb-4">
+                    <CardTitle className="text-base md:text-lg">What files do I get with my purchase?</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">
+                    <p className="text-sm md:text-base text-muted-foreground">
                       You'll receive source files including HTML, CSS, JavaScript, design files (Figma/PSD), 
                       documentation, and any required assets or fonts.
                     </p>
@@ -184,11 +298,11 @@ const Contact = () => {
                 </Card>
 
                 <Card className="card-elegant">
-                  <CardHeader>
-                    <CardTitle className="text-lg">How do refunds work?</CardTitle>
+                  <CardHeader className="pb-3 md:pb-4">
+                    <CardTitle className="text-base md:text-lg">How do refunds work?</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">
+                    <p className="text-sm md:text-base text-muted-foreground">
                       Refund requests must be made on the same day as purchase. Approved refunds 
                       are processed within 3-5 business days back to your original payment method.
                     </p>
