@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Search, Filter, Grid, List } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, Filter, Grid, List, Star, Heart, Eye, ShoppingCart, SlidersHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,81 +15,125 @@ const Products: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [sortBy, setSortBy] = useState<'name' | 'price' | 'rating'>('name');
+  const [isVisible, setIsVisible] = useState(false);
   const { addItem } = useCart();
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
   // Get unique categories
   const categories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
 
-  // Filter products
-  const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         product.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  // Filter and sort products
+  const filteredProducts = products
+    .filter(product => {
+      const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           product.category.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'price':
+          return a.price - b.price;
+        case 'rating':
+          return b.rating - a.rating;
+        case 'name':
+        default:
+          return a.name.localeCompare(b.name);
+      }
+    });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
       <Header />
       
-      <main className="section-padding">
+      {/* Background decorations */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-r from-blue-400/5 to-purple-600/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-10 w-80 h-80 bg-gradient-to-r from-purple-400/5 to-pink-600/5 rounded-full blur-3xl" />
+      </div>
+      
+      <main className="section-padding relative z-10">
         <div className="container-responsive">
-          {/* Page Header */}
-          <div className="text-center space-y-4 mb-12 md:mb-16">
-            <h1 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold text-foreground">
-              Our <span className="text-gradient">Products</span>
+          {/* Enhanced Page Header */}
+          <div className={`text-center space-y-6 mb-16 transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+            <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 text-sm font-semibold shadow-lg">
+              ✨ Premium Collection
+            </Badge>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+              Design <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">Templates</span>
             </h1>
-            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
-              Explore our complete collection of premium products, 
-              carefully curated for quality and innovation.
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Explore our complete collection of <span className="text-blue-600 font-semibold">premium design templates</span>, 
+              carefully curated for quality and modern aesthetics.
             </p>
           </div>
 
-          {/* Filters */}
-          <div className="space-y-4 mb-8">
-            {/* Search and View Toggle Row */}
-            <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
+          {/* Enhanced Filters */}
+          <div className={`bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50 space-y-6 mb-12 transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '0.2s' }}>
+            {/* Search and Controls Row */}
+            <div className="flex flex-col lg:flex-row gap-4 items-stretch lg:items-center">
               {/* Search */}
               <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
                 <Input
-                  placeholder="Search products..."
+                  placeholder="Search templates..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-9 h-10"
+                  className="pl-12 h-12 bg-white/90 border-gray-200 rounded-xl shadow-sm focus:shadow-md transition-shadow"
                 />
               </div>
 
-              {/* View Mode Toggle - Hidden on mobile, shown on larger screens */}
-              <div className="hidden sm:flex gap-2 shrink-0">
-                <Button
-                  variant={viewMode === 'grid' ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setViewMode('grid')}
-                  className="h-10 px-3"
+              {/* Sort and View Controls */}
+              <div className="flex gap-3 shrink-0">
+                <select 
+                  value={sortBy} 
+                  onChange={(e) => setSortBy(e.target.value as 'name' | 'price' | 'rating')}
+                  className="h-12 px-4 bg-white/90 border border-gray-200 rounded-xl shadow-sm focus:shadow-md transition-shadow text-sm font-medium"
                 >
-                  <Grid className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={viewMode === 'list' ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setViewMode('list')}
-                  className="h-10 px-3"
-                >
-                  <List className="h-4 w-4" />
-                </Button>
+                  <option value="name">Sort by Name</option>
+                  <option value="price">Sort by Price</option>
+                  <option value="rating">Sort by Rating</option>
+                </select>
+                
+                <div className="hidden sm:flex gap-2">
+                  <Button
+                    variant={viewMode === 'grid' ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setViewMode('grid')}
+                    className="h-12 px-4 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <Grid className="h-5 w-5" />
+                  </Button>
+                  <Button
+                    variant={viewMode === 'list' ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setViewMode('list')}
+                    className="h-12 px-4 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <List className="h-5 w-5" />
+                  </Button>
+                </div>
               </div>
             </div>
 
-            {/* Category Filter */}
-            <div className="flex flex-wrap gap-2">
+            {/* Enhanced Category Filter */}
+            <div className="flex flex-wrap gap-3">
               {categories.map(category => (
                 <Button
                   key={category}
                   variant={selectedCategory === category ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedCategory(category)}
-                  className={`h-9 px-3 text-xs sm:text-sm ${selectedCategory === category ? "bg-accent text-accent-foreground" : ""}`}
+                  className={`h-10 px-6 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 ${
+                    selectedCategory === category 
+                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl" 
+                      : "bg-white/90 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-blue-300 shadow-sm hover:shadow-md"
+                  }`}
                 >
                   {category}
                 </Button>
@@ -97,53 +141,82 @@ const Products: React.FC = () => {
             </div>
           </div>
 
-          {/* Results Count */}
-          <div className="mb-6 md:mb-8">
-            <p className="text-sm md:text-base text-muted-foreground">
-              Showing {filteredProducts.length} of {products.length} products
+          {/* Enhanced Results Count */}
+          <div className={`mb-8 flex items-center justify-between transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '0.4s' }}>
+            <p className="text-lg font-semibold text-gray-700">
+              Showing <span className="text-blue-600">{filteredProducts.length}</span> of <span className="text-blue-600">{products.length}</span> templates
             </p>
+            <div className="hidden md:flex items-center space-x-2 text-sm text-gray-500">
+              <SlidersHorizontal className="h-4 w-4" />
+              <span>Advanced filters</span>
+            </div>
           </div>
 
           {/* Products Grid/List */}
           {viewMode === 'grid' ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {filteredProducts.map((product, index) => (
                 <Card 
                   key={product.id} 
-                  className="card-elegant group cursor-pointer overflow-hidden"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  className={`group cursor-pointer overflow-hidden bg-white border-0 rounded-3xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+                  style={{ 
+                    transitionDelay: `${0.6 + index * 0.05}s`
+                  }}
+                  onClick={() => window.location.href = `/product/${product.id}`}
                 >
-                  <div className="aspect-square overflow-hidden rounded-t-xl">
+                  <div className="relative aspect-[4/3] overflow-hidden">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                     />
+                    
+                    {/* Premium badge */}
+                    <div className="absolute top-3 left-3">
+                      <Badge className="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md">
+                        PREMIUM
+                      </Badge>
+                    </div>
+                    
+                    {/* Star rating overlay */}
+                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center space-x-1">
+                      <Star className="h-3 w-3 text-yellow-400 fill-current" />
+                      <span className="text-xs font-semibold text-gray-700">{product.rating || '4.5'}</span>
+                    </div>
                   </div>
                   
-                  <CardContent className="p-3 md:p-4 space-y-3">
-                    <div className="space-y-2">
-                      <Badge variant="secondary" className="text-xs">
+                  <CardContent className="p-5 space-y-4">
+                    <div className="space-y-3">
+                      <Badge className="bg-gray-100 text-gray-700 text-xs font-medium px-2 py-1 rounded-md">
                         {product.category}
                       </Badge>
                       <Link to={`/product/${product.id}`}>
-                        <h3 className="font-semibold text-sm md:text-base leading-tight group-hover:text-accent transition-colors line-clamp-2">
+                        <h3 className="font-bold text-base leading-tight text-gray-900 group-hover:text-blue-600 transition-colors duration-200 line-clamp-2">
                           {product.name}
                         </h3>
                       </Link>
-                      <p className="text-xs md:text-sm text-muted-foreground line-clamp-2">
+                      <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">
                         {product.description}
                       </p>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-2">
-                      <p className="text-lg md:text-xl font-bold text-foreground">
-                        {formatCurrency(product.price)}
-                      </p>
+                    <div className="flex items-center justify-between pt-2">
+                      <div>
+                        <p className="text-lg font-bold text-gray-900">
+                          {formatCurrency(product.price)}
+                        </p>
+                        <p className="text-xs text-green-600 font-medium flex items-center mt-1">
+                          <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5"></span>
+                          Instant download
+                        </p>
+                      </div>
                       <Button
                         size="sm"
-                        onClick={() => addItem(product)}
-                        className="bg-accent text-accent-foreground hover:bg-accent-glow w-full sm:w-auto h-9 text-xs md:text-sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          addItem(product);
+                        }}
+                        className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 hover:shadow-lg"
                       >
                         Add to Cart
                       </Button>
@@ -213,21 +286,26 @@ const Products: React.FC = () => {
           )}
 
           {filteredProducts.length === 0 && (
-            <div className="text-center py-12 md:py-16 px-4">
-              <h3 className="text-lg md:text-xl font-semibold mb-2">No products found</h3>
-              <p className="text-sm md:text-base text-muted-foreground mb-4">
-                Try adjusting your search or filter criteria
-              </p>
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  setSearchTerm('');
-                  setSelectedCategory('All');
-                }}
-                className="h-10"
-              >
-                Clear Filters
-              </Button>
+            <div className="text-center py-20 px-4">
+              <div className="max-w-md mx-auto">
+                <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Search className="h-12 w-12 text-blue-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">No templates found</h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  We couldn't find any templates matching your criteria.
+                  <br />Try adjusting your search or filter settings.
+                </p>
+                <Button 
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedCategory('All');
+                  }}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                >
+                  Clear All Filters
+                </Button>
+              </div>
             </div>
           )}
         </div>

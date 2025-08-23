@@ -20,6 +20,23 @@ export interface Product {
   rating: number;
   reviewCount: number;
   reviews: Review[];
+  keyFeatures?: string[];
+  builtInPackages?: string[];
+  specifications?: {
+    version?: string;
+    updated?: string;
+    bootstrap?: string;
+    category?: string;
+    license?: string;
+  };
+  licenseOptions?: {
+    standard: number;
+    multisite: number;
+    extended: number;
+  };
+  livePreviewUrl?: string;
+  installationGuide?: string;
+  changelog?: string[];
 }
 
 export interface CartItem extends Product {

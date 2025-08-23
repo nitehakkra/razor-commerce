@@ -117,15 +117,80 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
+        {/* Payment Methods Section */}
+        <div className="border-t border-primary-foreground/20 py-8">
+          <div className="text-center space-y-6">
+            <p className="text-sm text-primary-foreground/80 font-medium">
+              Secure payments powered by trusted providers
+            </p>
+            <div className="flex flex-wrap justify-center items-center gap-6 md:gap-8">
+              {/* Visa */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
+                <img 
+                  src="https://www.freepnglogos.com/uploads/verified-by-visa-logo-png-0.png" 
+                  alt="Visa" 
+                  className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+                />
+              </div>
+              
+              {/* Mastercard */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
+                <img 
+                  src="https://www.pngall.com/wp-content/uploads/13/Mastercard-Logo-No-Background.png" 
+                  alt="Mastercard" 
+                  className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+                />
+              </div>
+              
+              {/* American Express */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
+                <img 
+                  src="https://1000logos.net/wp-content/uploads/2016/10/American-Express-Color-500x281.png" 
+                  alt="American Express" 
+                  className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+                />
+              </div>
+              
+              {/* Discover */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
+                <img 
+                  src="https://upload.wikimedia.org/wikipedia/commons/5/57/Discover_Card_logo.svg" 
+                  alt="Discover" 
+                  className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+                />
+              </div>
+              
+              {/* RuPay */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
+                <img 
+                  src="https://iconape.com/wp-content/png_logo_vector/rupay-logo.png" 
+                  alt="RuPay" 
+                  className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+                />
+              </div>
+              
+              {/* Razorpay */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
+                <img 
+                  src="https://upload.wikimedia.org/wikipedia/commons/8/89/Razorpay_logo.svg" 
+                  alt="Razorpay" 
+                  className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom Footer */}
         <div className="border-t border-primary-foreground/20 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm text-primary-foreground/60">
-              © 2024 DesignCraft. All rights reserved.
+              2024 DesignCraft. All rights reserved.
             </p>
-            <div className="flex items-center space-x-6 text-sm text-primary-foreground/60">
-              <span>Secure payments powered by</span>
-              <span className="font-semibold text-accent">Razorpay</span>
+            <div className="flex items-center space-x-2 text-sm text-primary-foreground/60">
+              <span> SSL Secured</span>
+              <span>•</span>
+              <span>256-bit Encryption</span>
             </div>
           </div>
         </div>

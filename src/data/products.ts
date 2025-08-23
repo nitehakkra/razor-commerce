@@ -33,6 +33,44 @@ export const products: Product[] = [
     category: 'UI Templates',
     inStock: true,
     featured: true,
+    keyFeatures: [
+      '50+ UI Components',
+      'Dark & Light Mode',
+      'Responsive Design',
+      'Figma Source Files',
+      'React Components',
+      'TypeScript Support',
+      'Premium Icons',
+      'Documentation Included'
+    ],
+    builtInPackages: [
+      'React & TypeScript',
+      'Tailwind CSS',
+      'Framer Motion',
+      'React Hook Form',
+      'React Query',
+      'Lucide Icons'
+    ],
+    specifications: {
+      version: '2.1.0',
+      updated: '2 months ago',
+      bootstrap: 'v5.3.2',
+      category: 'UI & Design',
+      license: 'Commercial Use'
+    },
+    licenseOptions: {
+      standard: 299,
+      multisite: 599,
+      extended: 1299
+    },
+    livePreviewUrl: '/products/1',
+    installationGuide: 'Complete setup guide with video tutorials',
+    changelog: [
+      'Added new dashboard components',
+      'Improved responsive design',
+      'Updated color palette',
+      'Bug fixes and performance improvements'
+    ]
   }),
   generateProductWithReviews({
     id: '2',
@@ -43,6 +81,44 @@ export const products: Product[] = [
     category: 'Website Templates',
     inStock: true,
     featured: true,
+    keyFeatures: [
+      '10+ Page Layouts',
+      'Mobile-First Design',
+      'SEO Optimized',
+      'Contact Forms',
+      'Blog Integration',
+      'Portfolio Sections',
+      'Animation Effects',
+      'Cross-Browser Compatible'
+    ],
+    builtInPackages: [
+      'HTML5 & CSS3',
+      'Bootstrap Framework',
+      'jQuery',
+      'AOS Animation',
+      'Font Awesome Icons',
+      'Google Fonts'
+    ],
+    specifications: {
+      version: '1.8.0',
+      updated: '1 month ago',
+      bootstrap: 'v5.3.2',
+      category: 'Website Templates',
+      license: 'Extended License'
+    },
+    licenseOptions: {
+      standard: 599,
+      multisite: 1199,
+      extended: 2499
+    },
+    livePreviewUrl: '/products/2',
+    installationGuide: 'Step-by-step installation with customization guide',
+    changelog: [
+      'Added new homepage variations',
+      'Improved mobile responsiveness',
+      'Updated contact form validation',
+      'Performance optimizations'
+    ]
   }),
   generateProductWithReviews({
     id: '3',
@@ -53,6 +129,44 @@ export const products: Product[] = [
     category: 'Mobile Design',
     inStock: true,
     featured: true,
+    keyFeatures: [
+      '100+ Mobile Screens',
+      'iOS & Android Compatible',
+      'Figma & Sketch Files',
+      'Dark & Light Themes',
+      'Component Library',
+      'Icon Pack Included',
+      'Prototype Ready',
+      'Design System'
+    ],
+    builtInPackages: [
+      'Figma Components',
+      'Sketch Symbols',
+      'Adobe XD Assets',
+      'React Native Components',
+      'Flutter Widgets',
+      'Icon Library'
+    ],
+    specifications: {
+      version: '3.2.0',
+      updated: '3 weeks ago',
+      bootstrap: 'N/A',
+      category: 'Mobile UI/UX',
+      license: 'Commercial Use'
+    },
+    licenseOptions: {
+      standard: 6999,
+      multisite: 13999,
+      extended: 29999
+    },
+    livePreviewUrl: '/products/3',
+    installationGuide: 'Design files with comprehensive style guide and component documentation',
+    changelog: [
+      'Added new onboarding screens',
+      'Updated color palette',
+      'New component variations',
+      'Improved accessibility features'
+    ]
   }),
   generateProductWithReviews({
     id: '4',
@@ -63,6 +177,44 @@ export const products: Product[] = [
     category: 'E-commerce Design',
     inStock: true,
     featured: false,
+    keyFeatures: [
+      'Complete E-commerce Solution',
+      'Product Catalog Pages',
+      'Shopping Cart & Checkout',
+      'User Account System',
+      'Payment Integration Ready',
+      'Inventory Management',
+      'Order Tracking',
+      'Mobile Responsive'
+    ],
+    builtInPackages: [
+      'React E-commerce Components',
+      'Payment Gateway Integration',
+      'Shopping Cart Logic',
+      'Product Filter System',
+      'User Authentication',
+      'Order Management'
+    ],
+    specifications: {
+      version: '2.5.0',
+      updated: '1 month ago',
+      bootstrap: 'v5.3.2',
+      category: 'E-commerce Templates',
+      license: 'Extended License'
+    },
+    licenseOptions: {
+      standard: 9799,
+      multisite: 19599,
+      extended: 39999
+    },
+    livePreviewUrl: '/products/4',
+    installationGuide: 'Full setup guide with database schema and API documentation',
+    changelog: [
+      'Added wishlist functionality',
+      'Improved checkout process',
+      'New payment methods support',
+      'Enhanced product search'
+    ]
   }),
   generateProductWithReviews({
     id: '5',
@@ -73,6 +225,44 @@ export const products: Product[] = [
     category: 'Dashboard Design',
     inStock: true,
     featured: true,
+    keyFeatures: [
+      'Advanced Analytics Dashboard',
+      'Multiple Chart Types',
+      'Dark & Light Themes',
+      'User Management System',
+      'Real-time Data Updates',
+      'Customizable Widgets',
+      'Export Functionality',
+      'Role-based Access Control'
+    ],
+    builtInPackages: [
+      'Chart.js Integration',
+      'React Dashboard Components',
+      'Data Visualization Tools',
+      'Authentication System',
+      'API Integration',
+      'Export Libraries'
+    ],
+    specifications: {
+      version: '4.1.0',
+      updated: '2 weeks ago',
+      bootstrap: 'v5.3.2',
+      category: 'Admin Templates',
+      license: 'Commercial Use'
+    },
+    licenseOptions: {
+      standard: 12799,
+      multisite: 25599,
+      extended: 51999
+    },
+    livePreviewUrl: '/products/5',
+    installationGuide: 'Complete admin setup with user roles and permissions guide',
+    changelog: [
+      'New analytics widgets',
+      'Improved performance',
+      'Added export features',
+      'Enhanced security measures'
+    ]
   }),
   generateProductWithReviews({
     id: '6',
@@ -113,6 +303,69 @@ export const products: Product[] = [
     category: 'Blog Design',
     inStock: true,
     featured: true,
+  }),
+  generateProductWithReviews({
+    id: '10',
+    name: 'FreshCart – Next.js eCommerce Template',
+    price: 4900,
+    description: 'Professional Next.js eCommerce website template designed for grocery stores and online marketplaces. Features 5+ home page variations, admin dashboard, 100+ components, authentication, mega menu, faceted navigation, mini cart, checkout pages, and fully responsive layouts. Built with React & Redux, Bootstrap, and modern UI components.',
+    image: productEcommerceDesign,
+    category: 'E-commerce Templates',
+    inStock: true,
+    featured: true,
+    keyFeatures: [
+      '5+ Home Page Variations',
+      'Admin Dashboard for Grocery stores',
+      '100+ Components / Different layouts',
+      'Authentication Features',
+      'Mega Menu',
+      'Faceted Navigation (Multiple Filters based On Various Attributes)',
+      'Mini Cart page',
+      'Quick Popup Design',
+      'Checkout Page',
+      'Shop List & Grid Filter',
+      'Wish List',
+      'Multiple Store UI',
+      'Fully Responsive Layouts',
+      'Responsive Navigation Menu',
+      'Well Documented',
+      'Regular update',
+      'Dedicated support',
+      'Clean & Modern Design',
+      'Google Fonts',
+      'Lifetime Updates'
+    ],
+    builtInPackages: [
+      'React & Redux',
+      'React Simplebar',
+      'Slick Carousel',
+      'React Tiny Slider',
+      'React Quill',
+      'React Flatpickr',
+      'React Dropzone',
+      'React Bootstrap',
+      'Bootstrap and feather Icons'
+    ],
+    specifications: {
+      version: '1.1.0',
+      updated: '11 months ago',
+      bootstrap: 'v5.3.3',
+      category: 'E-Commerce & Retail',
+      license: 'Commercial Use'
+    },
+    licenseOptions: {
+      standard: 4900,
+      multisite: 14900,
+      extended: 44900
+    },
+    livePreviewUrl: 'https://themes.getbootstrap.com/preview/?theme_id=158749',
+    installationGuide: 'https://youtu.be/BBsnSZE3wFA?si=erYcgDEkunHVF8oI',
+    changelog: [
+      'Added new pages - Blog Grid, Blog List, New Blog Post',
+      'Add New Customer, Edit Customer pages',
+      'Performance improvements',
+      'Bug fixes and updates'
+    ]
   }),
 ];
 
