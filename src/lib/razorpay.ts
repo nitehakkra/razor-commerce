@@ -71,6 +71,8 @@ export const openRazorpayCheckout = async ({
     },
     notes,
     handler: (response: any) => {
+      // For production, implement proper payment verification on backend
+      console.log('Payment successful:', response);
       onSuccess?.(response);
     },
     modal: {
@@ -79,7 +81,7 @@ export const openRazorpayCheckout = async ({
       },
     },
     theme: {
-      color: '#88929E', // neutral-accent-like
+      color: '#3B82F6', // blue-500
     },
   };
 
