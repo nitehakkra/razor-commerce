@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,6 +13,8 @@ import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import NotFound from "./pages/NotFound";
+import RouteProgress from "@/components/layout/RouteProgress";
+import SupportWidget from "@/components/support/SupportWidget";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +25,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <RouteProgress />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/products" element={<Products />} />
@@ -33,6 +37,7 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <SupportWidget />
         </BrowserRouter>
       </TooltipProvider>
     </CartProvider>

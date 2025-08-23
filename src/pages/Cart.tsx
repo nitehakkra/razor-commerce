@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Minus, Plus, X, ArrowLeft, ShoppingBag, CreditCard, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,14 +10,42 @@ import { useCart } from '@/contexts/CartContext';
 import { formatCurrency } from '@/lib/utils';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import { openRazorpayCheckout } from '@/lib/razorpay';
+import { toast } from 'sonner';
 
 const Cart: React.FC = () => {
   const { items, removeItem, updateQuantity, total, clearCart } = useCart();
 
-  // Razorpay integration will be added here
-  const handleCheckout = () => {
-    // For now, show a placeholder message
-    alert('Razorpay integration requires backend setup. Please connect to Supabase to enable secure payments.');
+  const handleCheckout = async () => {
+    if (items.length === 0) return;
+
+    // Amount is in INR; Razorpay expects paise
+    const shippingCost = total >= 500 ? 0 : 50;
+    const finalTotal = total + shippingCost;
+    const amountInPaise = Math.round(finalTotal * 100);
+
+    try {
+      await openRazorpayCheckout({
+        amountInPaise,
+        currency: 'INR',
+        name: 'Design Templates Checkout',
+        description: `Payment for ${items.reduce((sum, i) => sum + i.quantity, 0)} item(s)`,
+        notes: {
+          cart_summary: items.map(i => `${i.name} x${i.quantity}`).join(', ').slice(0, 250),
+        },
+        onSuccess: (res) => {
+          console.log('Razorpay success:', res);
+          toast.success('Payment successful! Thank you for your purchase.');
+          clearCart();
+        },
+        onDismiss: () => {
+          toast.message('Checkout closed');
+        },
+      });
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err?.message || 'Unable to start checkout');
+    }
   };
 
   if (items.length === 0) {

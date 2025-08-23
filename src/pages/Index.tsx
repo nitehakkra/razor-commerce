@@ -7,6 +7,7 @@ import FeaturedProducts from '@/components/sections/FeaturedProducts';
 import CustomDesignServices from '@/components/sections/CustomDesignServices';
 import WhyChooseUs from '@/components/sections/WhyChooseUs';
 import Testimonials from '@/components/sections/Testimonials';
+import Newsletter from '@/components/sections/Newsletter';
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
         <CustomDesignServices />
         <WhyChooseUs />
         <Testimonials />
+        <Newsletter />
       </main>
       <Footer />
     </div>

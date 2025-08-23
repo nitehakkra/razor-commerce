@@ -1,9 +1,10 @@
+
 import React from 'react';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight, Star, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getFeaturedProducts } from '@/data/products';
 import { useCart } from '@/contexts/CartContext';
 import { formatCurrency } from '@/lib/utils';
@@ -11,6 +12,7 @@ import { formatCurrency } from '@/lib/utils';
 const FeaturedProducts: React.FC = () => {
   const featuredProducts = getFeaturedProducts().slice(0, 6);
   const { addItem } = useCart();
+  const navigate = useNavigate();
 
   return (
     <section className="section-padding bg-muted/30">
@@ -21,11 +23,11 @@ const FeaturedProducts: React.FC = () => {
             Featured Collection
           </Badge>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground">
-            Premium <span className="text-gradient">Products</span>
+            Premium <span className="text-gradient">Templates</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Discover our handpicked selection of premium products, 
-            carefully chosen for their exceptional quality and innovative features.
+            Discover our handpicked selection of premium web and UI design templates,
+            crafted for exceptional quality and modern aesthetics.
           </p>
         </div>
 
@@ -36,14 +38,23 @@ const FeaturedProducts: React.FC = () => {
               key={product.id} 
               className="card-elegant group cursor-pointer overflow-hidden"
               style={{ animationDelay: `${index * 0.1}s` }}
+              role="button"
+              tabIndex={0}
+              onClick={() => navigate(`/product/${product.id}`)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  navigate(`/product/${product.id}`);
+                }
+              }}
             >
-              <div className="aspect-square overflow-hidden rounded-t-xl">
+              <div className="relative aspect-square overflow-hidden rounded-t-xl">
                 <img
                   src={product.image}
                   alt={product.name}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
               
               <CardContent className="p-6 space-y-4">
@@ -70,19 +81,24 @@ const FeaturedProducts: React.FC = () => {
                     <p className="text-2xl font-bold text-foreground">
                       {formatCurrency(product.price)}
                     </p>
-                    <p className="text-xs text-muted-foreground">Free shipping</p>
+                    <p className="text-xs text-muted-foreground">Free updates included</p>
                   </div>
                   <div className="flex space-x-2">
-                    <Link to={`/product/${product.id}`}>
-                      <Button variant="outline" size="sm">
+                    <Link to={`/product/${product.id}`} onClick={(e) => e.stopPropagation()}>
+                      <Button variant="outline" size="sm" aria-label={`View details for ${product.name}`}>
                         View Details
                       </Button>
                     </Link>
                     <Button
                       size="sm"
-                      onClick={() => addItem(product)}
-                      className="bg-accent text-accent-foreground hover:bg-accent-glow"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addItem(product);
+                      }}
+                      className="h-9 px-3 bg-accent text-accent-foreground hover:bg-accent-glow shadow-md hover:shadow-lg transition-shadow"
+                      aria-label={`Add ${product.name} to cart`}
                     >
+                      <ShoppingCart className="h-4 w-4 mr-2" />
                       Add to Cart
                     </Button>
                   </div>
@@ -95,8 +111,8 @@ const FeaturedProducts: React.FC = () => {
         {/* View All Button */}
         <div className="text-center">
           <Link to="/products">
-            <Button className="btn-hero group">
-              View All Products
+            <Button className="btn-hero group" aria-label="View all templates">
+              View All Templates
               <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Button>
           </Link>
