@@ -14,6 +14,7 @@ import About from "./pages/About";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import CancellationRefunds from "./pages/CancellationRefunds";
+import OrderConfirmation from "./pages/OrderConfirmation";
 import NotFound from "./pages/NotFound";
 import RouteProgress from "@/components/layout/RouteProgress";
 import SupportWidget from "@/components/support/SupportWidget";
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-conditions" element={<TermsConditions />} />
             <Route path="/cancellation-refunds" element={<CancellationRefunds />} />
+            <Route path="/order-confirmation" element={<OrderConfirmation />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
