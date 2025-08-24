@@ -360,24 +360,74 @@ const Cart: React.FC = () => {
                   </Button>
 
                   {/* Trust Indicators */}
-                  <div className="space-y-3 pt-4 border-t border-gray-200">
+                  <div className="space-y-4 pt-4 border-t border-gray-200">
                     <div className="text-center">
-                      <p className="text-xs text-gray-600 mb-2">
-                        Secure checkout powered by Razorpay
-                      </p>
-                      <div className="flex flex-wrap justify-center gap-2">
-                        <Badge variant="outline" className="bg-green-50 border-green-200 text-green-800 text-xs px-2 py-1">
-                          <Shield className="w-3 h-3 mr-1" />
-                          SSL
-                        </Badge>
-                        <Badge variant="outline" className="bg-blue-50 border-blue-200 text-blue-800 text-xs px-2 py-1">
-                          <Shield className="w-3 h-3 mr-1" />
-                          PCI DSS
-                        </Badge>
-                        <Badge variant="outline" className="bg-purple-50 border-purple-200 text-purple-800 text-xs px-2 py-1">
-                          <Shield className="w-3 h-3 mr-1" />
-                          Secure
-                        </Badge>
+                      <div className="flex items-center justify-center gap-2 mb-3">
+                        <img 
+                          src="https://razorpay.com/assets/razorpay-logo.svg" 
+                          alt="Razorpay" 
+                          className="h-5"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                          }}
+                        />
+                        <span className="text-xs font-medium text-gray-700">Powered by Razorpay</span>
+                      </div>
+                      
+                      {/* Security Badges */}
+                      <div className="flex flex-wrap justify-center gap-2 mb-3">
+                        <div className="flex items-center gap-1 bg-green-50 border border-green-200 rounded-md px-2 py-1">
+                          <Shield className="w-3 h-3 text-green-600" />
+                          <span className="text-xs font-medium text-green-800">256-bit SSL</span>
+                        </div>
+                        <div className="flex items-center gap-1 bg-blue-50 border border-blue-200 rounded-md px-2 py-1">
+                          <Shield className="w-3 h-3 text-blue-600" />
+                          <span className="text-xs font-medium text-blue-800">PCI DSS</span>
+                        </div>
+                        <div className="flex items-center gap-1 bg-purple-50 border border-purple-200 rounded-md px-2 py-1">
+                          <Shield className="w-3 h-3 text-purple-600" />
+                          <span className="text-xs font-medium text-purple-800">Secure</span>
+                        </div>
+                      </div>
+
+                      {/* Payment Methods */}
+                      <div className="text-center">
+                        <p className="text-xs text-gray-500 mb-2">Accepted Payment Methods</p>
+                        <div className="flex justify-center items-center gap-2 flex-wrap">
+                          {/* Visa */}
+                          <div className="bg-white border border-gray-200 rounded px-2 py-1 h-6 flex items-center">
+                            <svg className="h-4 w-6" viewBox="0 0 24 16" fill="none">
+                              <rect width="24" height="16" fill="white" rx="2"/>
+                              <path d="M8.5 3L6.8 13h-1.6L6.9 3h1.6zm4.8 0l-1.2 6.8c-.1.4-.4.7-.8.7s-.7-.3-.6-.7L11.9 3h1.4zm4.2 0c.4 0 .8.3.8.7L17.1 13h-1.4l.8-4.5c.1-.4.4-.7.8-.7h1.2zm-8.4 0L7.9 13H6.5l1.2-10h1.4z" fill="#1A1F71"/>
+                            </svg>
+                          </div>
+                          {/* Mastercard */}
+                          <div className="bg-white border border-gray-200 rounded px-2 py-1 h-6 flex items-center">
+                            <svg className="h-4 w-6" viewBox="0 0 24 16" fill="none">
+                              <rect width="24" height="16" fill="white" rx="2"/>
+                              <circle cx="9" cy="8" r="4" fill="#EB001B"/>
+                              <circle cx="15" cy="8" r="4" fill="#F79E1B"/>
+                              <path d="M12 4.5c1.5 1.2 2.5 3 2.5 5s-1 3.8-2.5 5c-1.5-1.2-2.5-3-2.5-5s1-3.8 2.5-5z" fill="#FF5F00"/>
+                            </svg>
+                          </div>
+                          {/* RuPay */}
+                          <div className="bg-white border border-gray-200 rounded px-2 py-1 h-6 flex items-center">
+                            <svg className="h-4 w-6" viewBox="0 0 24 16" fill="none">
+                              <rect width="24" height="16" fill="white" rx="2"/>
+                              <path d="M3 6h6v4H3V6zm12 0h6v4h-6V6z" fill="#097939"/>
+                              <path d="M10.5 6h3v4h-3V6z" fill="#FF6600"/>
+                            </svg>
+                          </div>
+                          {/* UPI */}
+                          <div className="bg-white border border-gray-200 rounded px-2 py-1 h-6 flex items-center">
+                            <span className="text-xs font-bold text-orange-600">UPI</span>
+                          </div>
+                          {/* Net Banking */}
+                          <div className="bg-white border border-gray-200 rounded px-2 py-1 h-6 flex items-center">
+                            <span className="text-xs font-medium text-blue-600">Net Banking</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
