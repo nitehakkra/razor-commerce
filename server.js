@@ -1,7 +1,9 @@
-import express from 'express';
-import Razorpay from 'razorpay';
-import cors from 'cors';
-import dotenv from 'dotenv';
+
+const express = require('express');
+// Removed top-level Razorpay import to avoid startup crash if the package is not present
+// const Razorpay = require('razorpay');
+const cors = require('cors');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -12,17 +14,59 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Initialize Razorpay
-if (!process.env.VITE_RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
-  console.error('Missing Razorpay environment variables!');
-  console.log('VITE_RAZORPAY_KEY_ID:', process.env.VITE_RAZORPAY_KEY_ID ? 'Set' : 'Missing');
-  console.log('RAZORPAY_KEY_SECRET:', process.env.RAZORPAY_KEY_SECRET ? 'Set' : 'Missing');
-}
-
-const razorpay = new Razorpay({
-  key_id: process.env.VITE_RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
+// Root route to verify server is up
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    message: 'Razorpay Commerce Server is running',
+    health: '/api/health',
+    timestamp: new Date().toISOString(),
+  });
 });
+// Add HEAD responder so platforms that probe "/" with HEAD also succeed
+app.head('/', (_req, res) => res.status(200).end());
+
+// Lightweight healthcheck endpoints for platform probes
+app.get('/healthz', (_req, res) => {
+  res.status(200).type('text').send('ok');
+});
+app.head('/healthz', (_req, res) => {
+  res.status(200).end();
+});
+// Optional: silence favicon requests in logs
+app.get('/favicon.ico', (_req, res) => res.status(204).end());
+
+// Initialize Razorpay - DEFERRED to runtime to avoid crashing on startup if env vars are missing
+const getRazorpay = () => {
+  // Lazily require here so server can boot even if the dependency isn't installed
+  let Razorpay;
+  try {
+    Razorpay = require('razorpay');
+  } catch (e) {
+    const err = new Error('Razorpay SDK not installed or failed to load');
+    err.details = { require_error: e && e.message ? e.message : String(e) };
+    throw err;
+  }
+
+  const keyId = process.env.VITE_RAZORPAY_KEY_ID;
+  const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+  if (!keyId || !keySecret) {
+    const missing = {
+      razorpay_key_id: keyId ? 'Set' : 'Missing',
+      razorpay_secret: keySecret ? 'Set' : 'Missing',
+    };
+    const err = new Error('Razorpay keys are not configured');
+    // Attach details for logging
+    err.details = missing;
+    throw err;
+  }
+
+  return new Razorpay({
+    key_id: keyId,
+    key_secret: keySecret,
+  });
+};
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -32,8 +76,8 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
     env_check: {
       razorpay_key_id: process.env.VITE_RAZORPAY_KEY_ID ? 'Set' : 'Missing',
-      razorpay_secret: process.env.RAZORPAY_KEY_SECRET ? 'Set' : 'Missing'
-    }
+      razorpay_secret: process.env.RAZORPAY_KEY_SECRET ? 'Set' : 'Missing',
+    },
   });
 });
 
@@ -59,6 +103,9 @@ app.post('/api/create-order', async (req, res) => {
     };
 
     console.log('Creating Razorpay order with options:', options);
+
+    // Lazily init Razorpay to avoid startup crash when keys are missing
+    const razorpay = getRazorpay();
     const order = await razorpay.orders.create(options);
     console.log('Order created successfully:', order.id);
     
@@ -68,12 +115,13 @@ app.post('/api/create-order', async (req, res) => {
       key_id: process.env.VITE_RAZORPAY_KEY_ID, // Frontend needs this
     });
   } catch (error) {
-    console.error('Error creating Razorpay order:', error);
+    console.error('Error creating Razorpay order:', error && (error.details || error.message) ? { message: error.message, details: error.details } : error);
     // Ensure we always return valid JSON
     return res.status(500).json({
       success: false,
       error: 'Failed to create order',
-      details: error.message || 'Unknown error',
+      details: (error && error.message) ? error.message : String(error),
+      env: error && error.details ? error.details : undefined,
     });
   }
 });
@@ -82,8 +130,15 @@ app.post('/api/create-order', async (req, res) => {
 app.post('/api/verify-payment', async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+    if (!process.env.RAZORPAY_KEY_SECRET) {
+      return res.status(500).json({
+        success: false,
+        error: 'Server not configured: missing RAZORPAY_KEY_SECRET',
+      });
+    }
     
-    const crypto = await import('crypto');
+    const crypto = require('crypto');
     const hmac = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET);
     hmac.update(razorpay_order_id + '|' + razorpay_payment_id);
     const generated_signature = hmac.digest('hex');
@@ -104,10 +159,12 @@ app.post('/api/verify-payment', async (req, res) => {
     res.status(500).json({
       success: false,
       error: 'Failed to verify payment',
+      details: (error && error.message) ? error.message : String(error),
     });
   }
 });
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
+  console.log('Healthcheck: GET /healthz');
 });

@@ -56,7 +56,12 @@ export const openRazorpayCheckout = async ({
   try {
     // Create order on backend using Orders API (REQUIRED for payment capture)
     console.log('Creating order with amount:', amountInPaise / 100);
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
+    // Prefer explicitly configured API URL, then same-origin fallback.
+    const explicitApi = import.meta.env.VITE_API_URL && String(import.meta.env.VITE_API_URL).trim();
+    const sameOrigin = typeof window !== 'undefined' ? window.location.origin : '';
+    const apiUrl = explicitApi || sameOrigin;
+
     const orderResponse = await fetch(`${apiUrl}/api/create-order`, {
       method: 'POST',
       headers: {
@@ -71,7 +76,12 @@ export const openRazorpayCheckout = async ({
     });
 
     if (!orderResponse.ok) {
-      const errorData = await orderResponse.json();
+      let errorData: any = {};
+      try {
+        errorData = await orderResponse.json();
+      } catch {
+        // noop
+      }
       throw new Error(`Failed to create order: ${errorData.error || 'Unknown error'}`);
     }
 
@@ -130,10 +140,11 @@ export const openRazorpayCheckout = async ({
       },
     };
 
-    const razorpay = new window.Razorpay(options);
+    const razorpay = new (window as any).Razorpay(options);
     razorpay.open();
   } catch (error) {
     console.error('Error in Razorpay checkout:', error);
     throw error;
   }
 };
+
