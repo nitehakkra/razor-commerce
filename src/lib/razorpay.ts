@@ -53,38 +53,87 @@ export const openRazorpayCheckout = async ({
     throw new Error('Failed to load Razorpay script');
   }
 
-  const key = import.meta.env.VITE_RAZORPAY_KEY_ID;
-  if (!key) {
-    throw new Error('Missing Razorpay Key ID. Please set VITE_RAZORPAY_KEY_ID.');
-  }
-
-  const options = {
-    key,
-    amount: amountInPaise,
-    currency,
-    name,
-    description,
-    prefill: {
-      name: customer?.name || '',
-      email: customer?.email || '',
-      contact: customer?.contact || '',
-    },
-    notes,
-    handler: (response: any) => {
-      // For production, implement proper payment verification on backend
-      console.log('Payment successful:', response);
-      onSuccess?.(response);
-    },
-    modal: {
-      ondismiss: () => {
-        onDismiss?.();
+  try {
+    // Create order on backend using Orders API (REQUIRED for payment capture)
+    console.log('Creating order with amount:', amountInPaise / 100);
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+    const orderResponse = await fetch(`${apiUrl}/api/create-order`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    },
-    theme: {
-      color: '#3B82F6', // blue-500
-    },
-  };
+      body: JSON.stringify({
+        amount: amountInPaise / 100, // Convert back to rupees for backend
+        currency,
+        receipt: `receipt_${Date.now()}`,
+        notes: notes || {},
+      }),
+    });
 
-  const razorpay = new window.Razorpay(options);
-  razorpay.open();
+    if (!orderResponse.ok) {
+      const errorData = await orderResponse.json();
+      throw new Error(`Failed to create order: ${errorData.error || 'Unknown error'}`);
+    }
+
+    const { order, key_id } = await orderResponse.json();
+    console.log('Order created successfully:', order.id);
+
+    const options = {
+      key: key_id,
+      amount: order.amount,
+      currency: order.currency,
+      name,
+      description,
+      order_id: order.id, // CRITICAL: This ensures proper Orders API usage
+      prefill: {
+        name: customer?.name || '',
+        email: customer?.email || '',
+        contact: customer?.contact || '',
+      },
+      notes: order.notes,
+      handler: async (response: any) => {
+        try {
+          console.log('Payment response:', response);
+          
+          // Verify payment on backend
+          const verifyResponse = await fetch(`${apiUrl}/api/verify-payment`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            }),
+          });
+
+          if (verifyResponse.ok) {
+            console.log('Payment verified successfully');
+            onSuccess?.(response);
+          } else {
+            const errorData = await verifyResponse.json();
+            throw new Error(`Payment verification failed: ${errorData.message}`);
+          }
+        } catch (error) {
+          console.error('Payment verification error:', error);
+          throw error;
+        }
+      },
+      modal: {
+        ondismiss: () => {
+          onDismiss?.();
+        },
+      },
+      theme: {
+        color: '#3B82F6', // blue-500
+      },
+    };
+
+    const razorpay = new window.Razorpay(options);
+    razorpay.open();
+  } catch (error) {
+    console.error('Error in Razorpay checkout:', error);
+    throw error;
+  }
 };

@@ -21,25 +21,39 @@ const razorpay = new Razorpay({
 // Create order endpoint
 app.post('/api/create-order', async (req, res) => {
   try {
-    const { amount, currency = 'INR', receipt } = req.body;
+    const { amount, currency = 'INR', receipt, notes } = req.body;
+
+    // Validate amount
+    if (!amount || amount <= 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid amount provided',
+      });
+    }
 
     const options = {
-      amount: amount * 100, // Razorpay expects amount in paise
+      amount: Math.round(amount * 100), // Razorpay expects amount in paise (smallest currency unit)
       currency,
       receipt: receipt || `receipt_${Date.now()}`,
+      notes: notes || {},
+      payment_capture: 1, // Auto capture payment when successful
     };
 
+    console.log('Creating Razorpay order with options:', options);
     const order = await razorpay.orders.create(options);
+    console.log('Order created successfully:', order.id);
     
     res.json({
       success: true,
       order,
+      key_id: process.env.VITE_RAZORPAY_KEY_ID, // Frontend needs this
     });
   } catch (error) {
     console.error('Error creating Razorpay order:', error);
     res.status(500).json({
       success: false,
       error: 'Failed to create order',
+      details: error.message,
     });
   }
 });
