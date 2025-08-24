@@ -1,7 +1,8 @@
-import express from 'express';
-import Razorpay from 'razorpay';
-import cors from 'cors';
-import dotenv from 'dotenv';
+
+const express = require('express');
+const Razorpay = require('razorpay');
+const cors = require('cors');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -11,6 +12,16 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Root route to verify server is up
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    message: 'Razorpay Commerce Server is running',
+    health: '/api/health',
+    timestamp: new Date().toISOString(),
+  });
+});
 
 // Initialize Razorpay
 if (!process.env.VITE_RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
@@ -73,7 +84,7 @@ app.post('/api/create-order', async (req, res) => {
     return res.status(500).json({
       success: false,
       error: 'Failed to create order',
-      details: error.message || 'Unknown error',
+      details: (error && error.message) ? error.message : String(error),
     });
   }
 });
@@ -83,7 +94,7 @@ app.post('/api/verify-payment', async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
     
-    const crypto = await import('crypto');
+    const crypto = require('crypto');
     const hmac = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET);
     hmac.update(razorpay_order_id + '|' + razorpay_payment_id);
     const generated_signature = hmac.digest('hex');
@@ -104,10 +115,12 @@ app.post('/api/verify-payment', async (req, res) => {
     res.status(500).json({
       success: false,
       error: 'Failed to verify payment',
+      details: (error && error.message) ? error.message : String(error),
     });
   }
 });
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
+  console.log('Healthcheck: GET /api/health');
 });
