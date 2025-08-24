@@ -1,6 +1,7 @@
 
 const express = require('express');
-const Razorpay = require('razorpay');
+// Removed top-level Razorpay import to avoid startup crash if the package is not present
+// const Razorpay = require('razorpay');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
@@ -22,6 +23,8 @@ app.get('/', (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+// Add HEAD responder so platforms that probe "/" with HEAD also succeed
+app.head('/', (_req, res) => res.status(200).end());
 
 // Lightweight healthcheck endpoints for platform probes
 app.get('/healthz', (_req, res) => {
@@ -35,6 +38,16 @@ app.get('/favicon.ico', (_req, res) => res.status(204).end());
 
 // Initialize Razorpay - DEFERRED to runtime to avoid crashing on startup if env vars are missing
 const getRazorpay = () => {
+  // Lazily require here so server can boot even if the dependency isn't installed
+  let Razorpay;
+  try {
+    Razorpay = require('razorpay');
+  } catch (e) {
+    const err = new Error('Razorpay SDK not installed or failed to load');
+    err.details = { require_error: e && e.message ? e.message : String(e) };
+    throw err;
+  }
+
   const keyId = process.env.VITE_RAZORPAY_KEY_ID;
   const keySecret = process.env.RAZORPAY_KEY_SECRET;
 
@@ -155,4 +168,3 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
   console.log('Healthcheck: GET /healthz');
 });
-
