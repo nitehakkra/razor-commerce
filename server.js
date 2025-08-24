@@ -13,9 +13,27 @@ app.use(cors());
 app.use(express.json());
 
 // Initialize Razorpay
+if (!process.env.VITE_RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+  console.error('Missing Razorpay environment variables!');
+  console.log('VITE_RAZORPAY_KEY_ID:', process.env.VITE_RAZORPAY_KEY_ID ? 'Set' : 'Missing');
+  console.log('RAZORPAY_KEY_SECRET:', process.env.RAZORPAY_KEY_SECRET ? 'Set' : 'Missing');
+}
+
 const razorpay = new Razorpay({
   key_id: process.env.VITE_RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'OK',
+    message: 'Server is running',
+    env_check: {
+      razorpay_key_id: process.env.VITE_RAZORPAY_KEY_ID ? 'Set' : 'Missing',
+      razorpay_secret: process.env.RAZORPAY_KEY_SECRET ? 'Set' : 'Missing'
+    }
+  });
 });
 
 // Create order endpoint
@@ -50,10 +68,11 @@ app.post('/api/create-order', async (req, res) => {
     });
   } catch (error) {
     console.error('Error creating Razorpay order:', error);
-    res.status(500).json({
+    // Ensure we always return valid JSON
+    return res.status(500).json({
       success: false,
       error: 'Failed to create order',
-      details: error.message,
+      details: error.message || 'Unknown error',
     });
   }
 });
