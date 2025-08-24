@@ -14,17 +14,19 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Root route to verify server is up
-app.get('/', (req, res) => {
-  res.status(200).json({
-    status: 'OK',
-    message: 'Razorpay Commerce Server is running',
-    health: '/api/health',
-    timestamp: new Date().toISOString(),
-  });
+// Serve static files from dist directory
+app.use(express.static('dist'));
+
+// Serve React app for all non-API routes
+app.get('*', (req, res) => {
+  // Skip API routes
+  if (req.path.startsWith('/api/') || req.path === '/healthz' || req.path === '/favicon.ico') {
+    return res.status(404).json({ error: 'Not found' });
+  }
+  
+  // Serve React app
+  res.sendFile('index.html', { root: 'dist' });
 });
-// Add HEAD responder so platforms that probe "/" with HEAD also succeed
-app.head('/', (_req, res) => res.status(200).end());
 
 // Lightweight healthcheck endpoints for platform probes
 app.get('/healthz', (_req, res) => {
