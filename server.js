@@ -17,17 +17,6 @@ app.use(express.json());
 // Serve static files from dist directory
 app.use(express.static('dist'));
 
-// Serve React app for all non-API routes
-app.get('*', (req, res) => {
-  // Skip API routes
-  if (req.path.startsWith('/api/') || req.path === '/healthz' || req.path === '/favicon.ico') {
-    return res.status(404).json({ error: 'Not found' });
-  }
-  
-  // Serve React app
-  res.sendFile('index.html', { root: 'dist' });
-});
-
 // Lightweight healthcheck endpoints for platform probes
 app.get('/healthz', (_req, res) => {
   res.status(200).type('text').send('ok');
@@ -142,6 +131,11 @@ app.post('/api/verify-payment', async (req, res) => {
       details: (error && error.message) ? error.message : String(error),
     });
   }
+});
+
+// Catch-all handler: serve React app for any non-API routes
+app.get('*', (req, res) => {
+  res.sendFile('index.html', { root: 'dist' });
 });
 
 app.listen(PORT, '0.0.0.0', () => {
