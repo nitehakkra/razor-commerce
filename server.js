@@ -28,7 +28,8 @@ const razorpay = new Razorpay({
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'OK',
-    message: 'Server is running',
+    message: 'Razorpay Commerce Server is running',
+    timestamp: new Date().toISOString(),
     env_check: {
       razorpay_key_id: process.env.VITE_RAZORPAY_KEY_ID ? 'Set' : 'Missing',
       razorpay_secret: process.env.RAZORPAY_KEY_SECRET ? 'Set' : 'Missing'
