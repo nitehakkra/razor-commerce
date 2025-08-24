@@ -359,73 +359,67 @@ const Cart: React.FC = () => {
                     Proceed to Checkout
                   </Button>
 
-                  {/* Trust Indicators */}
-                  <div className="space-y-4 pt-4 border-t border-gray-200">
+                  {/* Payment Security */}
+                  <div className="space-y-3 pt-4 border-t border-gray-200">
                     <div className="text-center">
-                      <div className="flex items-center justify-center gap-2 mb-3">
-                        <img 
-                          src="https://razorpay.com/assets/razorpay-logo.svg" 
-                          alt="Razorpay" 
-                          className="h-5"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
-                          }}
-                        />
-                        <span className="text-xs font-medium text-gray-700">Powered by Razorpay</span>
+                      {/* Razorpay Branding */}
+                      <div className="flex items-center justify-center gap-2 mb-3 bg-gray-50 rounded-lg py-2 px-3">
+                        <svg className="h-4 w-16" viewBox="0 0 120 30" fill="none">
+                          <rect width="120" height="30" fill="white" rx="4"/>
+                          <path d="M20 8v14h-3l-5-9v9h-3V8h3l5 9V8h3zm8 0c3.3 0 6 2.7 6 6v2c0 3.3-2.7 6-6 6s-6-2.7-6-6v-2c0-3.3 2.7-6 6-6zm0 3c-1.7 0-3 1.3-3 3v2c0 1.7 1.3 3 3 3s3-1.3 3-3v-2c0-1.7-1.3-3-3-3z" fill="#3395FF"/>
+                          <text x="45" y="19" className="fill-gray-700 text-xs font-medium">Razorpay</text>
+                        </svg>
+                        <span className="text-xs text-gray-600">Secure Payment Gateway</span>
                       </div>
                       
-                      {/* Security Badges */}
-                      <div className="flex flex-wrap justify-center gap-2 mb-3">
-                        <div className="flex items-center gap-1 bg-green-50 border border-green-200 rounded-md px-2 py-1">
-                          <Shield className="w-3 h-3 text-green-600" />
-                          <span className="text-xs font-medium text-green-800">256-bit SSL</span>
+                      {/* Security Certifications */}
+                      <div className="grid grid-cols-3 gap-1 mb-3">
+                        <div className="bg-gray-50 border rounded-md px-2 py-1.5 text-center">
+                          <div className="flex items-center justify-center mb-1">
+                            <Shield className="w-3 h-3 text-green-600" />
+                          </div>
+                          <span className="text-xs font-medium text-gray-800">SSL</span>
                         </div>
-                        <div className="flex items-center gap-1 bg-blue-50 border border-blue-200 rounded-md px-2 py-1">
-                          <Shield className="w-3 h-3 text-blue-600" />
-                          <span className="text-xs font-medium text-blue-800">PCI DSS</span>
+                        <div className="bg-gray-50 border rounded-md px-2 py-1.5 text-center">
+                          <div className="flex items-center justify-center mb-1">
+                            <Shield className="w-3 h-3 text-blue-600" />
+                          </div>
+                          <span className="text-xs font-medium text-gray-800">PCI DSS</span>
                         </div>
-                        <div className="flex items-center gap-1 bg-purple-50 border border-purple-200 rounded-md px-2 py-1">
-                          <Shield className="w-3 h-3 text-purple-600" />
-                          <span className="text-xs font-medium text-purple-800">Secure</span>
+                        <div className="bg-gray-50 border rounded-md px-2 py-1.5 text-center">
+                          <div className="flex items-center justify-center mb-1">
+                            <Shield className="w-3 h-3 text-purple-600" />
+                          </div>
+                          <span className="text-xs font-medium text-gray-800">Encrypted</span>
                         </div>
                       </div>
 
                       {/* Payment Methods */}
                       <div className="text-center">
-                        <p className="text-xs text-gray-500 mb-2">Accepted Payment Methods</p>
-                        <div className="flex justify-center items-center gap-2 flex-wrap">
-                          {/* Visa */}
-                          <div className="bg-white border border-gray-200 rounded px-2 py-1 h-6 flex items-center">
-                            <svg className="h-4 w-6" viewBox="0 0 24 16" fill="none">
-                              <rect width="24" height="16" fill="white" rx="2"/>
-                              <path d="M8.5 3L6.8 13h-1.6L6.9 3h1.6zm4.8 0l-1.2 6.8c-.1.4-.4.7-.8.7s-.7-.3-.6-.7L11.9 3h1.4zm4.2 0c.4 0 .8.3.8.7L17.1 13h-1.4l.8-4.5c.1-.4.4-.7.8-.7h1.2zm-8.4 0L7.9 13H6.5l1.2-10h1.4z" fill="#1A1F71"/>
+                        <p className="text-xs text-gray-500 mb-2">We Accept</p>
+                        <div className="flex justify-center items-center gap-1.5">
+                          {/* Card Icons */}
+                          <div className="bg-white border rounded px-1.5 py-1 h-5 flex items-center shadow-sm">
+                            <svg className="h-3 w-5" viewBox="0 0 40 24" fill="none">
+                              <rect width="40" height="24" fill="white" rx="3"/>
+                              <path d="M8 6h24v12H8V6z" fill="#1A1F71"/>
+                              <path d="M10 8h20v8H10V8z" fill="white"/>
+                              <text x="20" y="14" textAnchor="middle" className="fill-blue-700 text-xs font-bold">VISA</text>
                             </svg>
                           </div>
-                          {/* Mastercard */}
-                          <div className="bg-white border border-gray-200 rounded px-2 py-1 h-6 flex items-center">
-                            <svg className="h-4 w-6" viewBox="0 0 24 16" fill="none">
-                              <rect width="24" height="16" fill="white" rx="2"/>
-                              <circle cx="9" cy="8" r="4" fill="#EB001B"/>
-                              <circle cx="15" cy="8" r="4" fill="#F79E1B"/>
-                              <path d="M12 4.5c1.5 1.2 2.5 3 2.5 5s-1 3.8-2.5 5c-1.5-1.2-2.5-3-2.5-5s1-3.8 2.5-5z" fill="#FF5F00"/>
+                          <div className="bg-white border rounded px-1.5 py-1 h-5 flex items-center shadow-sm">
+                            <svg className="h-3 w-5" viewBox="0 0 40 24" fill="none">
+                              <rect width="40" height="24" fill="white" rx="3"/>
+                              <circle cx="15" cy="12" r="6" fill="#EB001B"/>
+                              <circle cx="25" cy="12" r="6" fill="#F79E1B"/>
+                              <path d="M20 6c2.2 1.6 3.6 4.2 3.6 7s-1.4 5.4-3.6 7c-2.2-1.6-3.6-4.2-3.6-7s1.4-5.4 3.6-7z" fill="#FF5F00"/>
                             </svg>
                           </div>
-                          {/* RuPay */}
-                          <div className="bg-white border border-gray-200 rounded px-2 py-1 h-6 flex items-center">
-                            <svg className="h-4 w-6" viewBox="0 0 24 16" fill="none">
-                              <rect width="24" height="16" fill="white" rx="2"/>
-                              <path d="M3 6h6v4H3V6zm12 0h6v4h-6V6z" fill="#097939"/>
-                              <path d="M10.5 6h3v4h-3V6z" fill="#FF6600"/>
-                            </svg>
+                          <div className="bg-white border rounded px-1.5 py-1 h-5 flex items-center shadow-sm">
+                            <span className="text-xs font-bold text-green-700">RuPay</span>
                           </div>
-                          {/* UPI */}
-                          <div className="bg-white border border-gray-200 rounded px-2 py-1 h-6 flex items-center">
+                          <div className="bg-white border rounded px-1.5 py-1 h-5 flex items-center shadow-sm">
                             <span className="text-xs font-bold text-orange-600">UPI</span>
-                          </div>
-                          {/* Net Banking */}
-                          <div className="bg-white border border-gray-200 rounded px-2 py-1 h-6 flex items-center">
-                            <span className="text-xs font-medium text-blue-600">Net Banking</span>
                           </div>
                         </div>
                       </div>
@@ -434,34 +428,49 @@ const Cart: React.FC = () => {
                 </CardContent>
               </Card>
 
-              {/* Benefits */}
-              <Card className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border border-green-200/50 shadow-md">
+              {/* Purchase Benefits */}
+              <Card className="bg-white rounded-xl border border-gray-200 shadow-sm">
                 <CardContent className="p-4 md:p-6">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-3 text-center">What You Get</h4>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                        <Zap className="h-3 w-3 text-white" />
+                  <div className="text-center mb-4">
+                    <h4 className="text-sm font-semibold text-gray-900 mb-1">Included with Purchase</h4>
+                    <div className="w-12 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto rounded-full"></div>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 w-4 h-4 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <div className="w-2 h-2 bg-green-600 rounded-full"></div>
                       </div>
-                      <span className="text-xs font-medium text-gray-700">Instant download after purchase</span>
+                      <div className="min-w-0">
+                        <span className="text-sm font-medium text-gray-900 block">Immediate Access</span>
+                        <span className="text-xs text-gray-600">Download starts automatically after payment</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                        <Clock className="h-3 w-3 text-white" />
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
                       </div>
-                      <span className="text-xs font-medium text-gray-700">Lifetime access & updates</span>
+                      <div className="min-w-0">
+                        <span className="text-sm font-medium text-gray-900 block">Lifetime License</span>
+                        <span className="text-xs text-gray-600">Use for unlimited personal & commercial projects</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
-                        <Shield className="h-3 w-3 text-white" />
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 w-4 h-4 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
                       </div>
-                      <span className="text-xs font-medium text-gray-700">Premium support included</span>
+                      <div className="min-w-0">
+                        <span className="text-sm font-medium text-gray-900 block">Free Updates</span>
+                        <span className="text-xs text-gray-600">Get future versions at no additional cost</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center">
-                        <Gift className="h-3 w-3 text-white" />
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 w-4 h-4 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <div className="w-2 h-2 bg-amber-600 rounded-full"></div>
                       </div>
-                      <span className="text-xs font-medium text-gray-700">Commercial usage rights</span>
+                      <div className="min-w-0">
+                        <span className="text-sm font-medium text-gray-900 block">Email Support</span>
+                        <span className="text-xs text-gray-600">Technical assistance within 24 hours</span>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
