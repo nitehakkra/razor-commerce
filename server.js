@@ -23,6 +23,16 @@ app.get('/', (req, res) => {
   });
 });
 
+// Lightweight healthcheck endpoints for platform probes
+app.get('/healthz', (_req, res) => {
+  res.status(200).type('text').send('ok');
+});
+app.head('/healthz', (_req, res) => {
+  res.status(200).end();
+});
+// Optional: silence favicon requests in logs
+app.get('/favicon.ico', (_req, res) => res.status(204).end());
+
 // Initialize Razorpay - DEFERRED to runtime to avoid crashing on startup if env vars are missing
 const getRazorpay = () => {
   const keyId = process.env.VITE_RAZORPAY_KEY_ID;
@@ -143,6 +153,6 @@ app.post('/api/verify-payment', async (req, res) => {
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
-  console.log('Healthcheck: GET /api/health');
+  console.log('Healthcheck: GET /healthz');
 });
 
