@@ -309,6 +309,45 @@ const Cart: React.FC = () => {
                   Clear Cart
                 </Button>
               </div>
+
+              {/* Purchase Benefits */}
+              <Card className="bg-white rounded-xl border border-gray-200 shadow-sm mt-6">
+                <CardContent className="p-4 md:p-6">
+                  <div className="text-center mb-4">
+                    <h4 className="text-sm font-semibold text-gray-900 mb-1">Included with Purchase</h4>
+                    <div className="w-12 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto rounded-full"></div>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 w-4 h-4 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-sm font-medium text-gray-900 block">Immediate Access</span>
+                        <span className="text-xs text-gray-600">Download starts automatically after payment</span>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-sm font-medium text-gray-900 block">Lifetime License</span>
+                        <span className="text-xs text-gray-600">Use for unlimited personal & commercial projects</span>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 w-4 h-4 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <div className="w-2 h-2 bg-amber-600 rounded-full"></div>
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-sm font-medium text-gray-900 block">*Chat and *Email Support</span>
+                        <span className="text-xs text-gray-600">Technical assistance within 24 hours</span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
             {/* Order Summary */}
@@ -425,53 +464,6 @@ const Cart: React.FC = () => {
                 </CardContent>
               </Card>
 
-              {/* Purchase Benefits */}
-              <Card className="bg-white rounded-xl border border-gray-200 shadow-sm">
-                <CardContent className="p-4 md:p-6">
-                  <div className="text-center mb-4">
-                    <h4 className="text-sm font-semibold text-gray-900 mb-1">Included with Purchase</h4>
-                    <div className="w-12 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 mx-auto rounded-full"></div>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-3">
-                      <div className="mt-0.5 w-4 h-4 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <div className="w-2 h-2 bg-green-600 rounded-full"></div>
-                      </div>
-                      <div className="min-w-0">
-                        <span className="text-sm font-medium text-gray-900 block">Immediate Access</span>
-                        <span className="text-xs text-gray-600">Download starts automatically after payment</span>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <div className="mt-0.5 w-4 h-4 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                      </div>
-                      <div className="min-w-0">
-                        <span className="text-sm font-medium text-gray-900 block">Lifetime License</span>
-                        <span className="text-xs text-gray-600">Use for unlimited personal & commercial projects</span>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <div className="mt-0.5 w-4 h-4 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
-                      </div>
-                      <div className="min-w-0">
-                        <span className="text-sm font-medium text-gray-900 block">Free Updates</span>
-                        <span className="text-xs text-gray-600">Get future versions at no additional cost</span>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <div className="mt-0.5 w-4 h-4 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <div className="w-2 h-2 bg-amber-600 rounded-full"></div>
-                      </div>
-                      <div className="min-w-0">
-                        <span className="text-sm font-medium text-gray-900 block">Email Support</span>
-                        <span className="text-xs text-gray-600">Technical assistance within 24 hours</span>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
             </div>
           </div>
         </div>

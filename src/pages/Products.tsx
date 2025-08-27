@@ -60,15 +60,15 @@ const Products: React.FC = () => {
       <main className="section-padding relative z-10">
         <div className="container-responsive">
           {/* Enhanced Page Header */}
-          <div className={`text-center space-y-6 mb-16 transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 text-sm font-semibold shadow-lg">
-              ✨ Premium Collection
+          <div className={`text-center space-y-4 mb-12 transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+            <Badge className="mb-3 bg-slate-100 text-slate-700 px-4 py-1.5 text-xs font-medium border border-slate-200">
+              Premium Collection
             </Badge>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-              Design <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">Templates</span>
+            <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 leading-tight">
+              Design <span className="text-slate-700">Templates</span>
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Explore our complete collection of <span className="text-blue-600 font-semibold">premium design templates</span>, 
+            <p className="text-base text-gray-600 max-w-xl mx-auto leading-relaxed">
+              Explore our complete collection of premium design templates, 
               carefully curated for quality and modern aesthetics.
             </p>
           </div>
@@ -122,17 +122,17 @@ const Products: React.FC = () => {
             </div>
 
             {/* Enhanced Category Filter */}
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2">
               {categories.map(category => (
                 <Button
                   key={category}
                   variant={selectedCategory === category ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedCategory(category)}
-                  className={`h-10 px-6 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 ${
+                  className={`h-9 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
                     selectedCategory === category 
-                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl" 
-                      : "bg-white/90 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-blue-300 shadow-sm hover:shadow-md"
+                      ? "bg-slate-800 text-white hover:bg-slate-700" 
+                      : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400"
                   }`}
                 >
                   {category}
@@ -142,9 +142,9 @@ const Products: React.FC = () => {
           </div>
 
           {/* Enhanced Results Count */}
-          <div className={`mb-8 flex items-center justify-between transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '0.4s' }}>
-            <p className="text-lg font-semibold text-gray-700">
-              Showing <span className="text-blue-600">{filteredProducts.length}</span> of <span className="text-blue-600">{products.length}</span> templates
+          <div className={`mb-6 flex items-center justify-between transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '0.4s' }}>
+            <p className="text-sm font-medium text-gray-600">
+              Showing <span className="text-gray-900 font-semibold">{filteredProducts.length}</span> of <span className="text-gray-900 font-semibold">{products.length}</span> templates
             </p>
             <div className="hidden md:flex items-center space-x-2 text-sm text-gray-500">
               <SlidersHorizontal className="h-4 w-4" />
@@ -158,7 +158,7 @@ const Products: React.FC = () => {
               {filteredProducts.map((product, index) => (
                 <Card 
                   key={product.id} 
-                  className={`group cursor-pointer overflow-hidden bg-white border-0 rounded-3xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+                  className={`group cursor-pointer overflow-hidden bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-1 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
                   style={{ 
                     transitionDelay: `${0.6 + index * 0.05}s`
                   }}
@@ -173,7 +173,7 @@ const Products: React.FC = () => {
                     
                     {/* Premium badge */}
                     <div className="absolute top-3 left-3">
-                      <Badge className="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md">
+                      <Badge className="bg-slate-900 text-white text-xs font-medium px-2 py-1 rounded">
                         PREMIUM
                       </Badge>
                     </div>
@@ -186,8 +186,8 @@ const Products: React.FC = () => {
                   </div>
                   
                   <CardContent className="p-5 space-y-4">
-                    <div className="space-y-3">
-                      <Badge className="bg-gray-100 text-gray-700 text-xs font-medium px-2 py-1 rounded-md">
+                    <div className="space-y-2">
+                      <Badge className="bg-gray-100 text-gray-600 text-xs font-normal px-2 py-1 rounded">
                         {product.category}
                       </Badge>
                       <Link to={`/product/${product.id}`}>
@@ -216,7 +216,7 @@ const Products: React.FC = () => {
                           e.stopPropagation();
                           addItem(product);
                         }}
-                        className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 hover:shadow-lg"
+                        className="bg-slate-800 hover:bg-slate-900 text-white rounded px-3 py-1.5 text-sm font-medium transition-colors duration-200"
                       >
                         Add to Cart
                       </Button>
@@ -301,7 +301,7 @@ const Products: React.FC = () => {
                     setSearchTerm('');
                     setSelectedCategory('All');
                   }}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  className="bg-slate-800 hover:bg-slate-900 text-white px-6 py-2 rounded font-medium transition-colors duration-200"
                 >
                   Clear All Filters
                 </Button>

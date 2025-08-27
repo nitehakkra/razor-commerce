@@ -28,18 +28,26 @@ const Footer: React.FC = () => {
               We deliver modern, responsive designs for your digital success.
             </p>
             <div className="flex space-x-4">
-              <Button variant="ghost" size="sm" className="text-primary-foreground/60 hover:text-accent p-2">
-                <Facebook className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="sm" className="text-primary-foreground/60 hover:text-accent p-2">
-                <Twitter className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="sm" className="text-primary-foreground/60 hover:text-accent p-2">
-                <Instagram className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="sm" className="text-primary-foreground/60 hover:text-accent p-2">
-                <Linkedin className="h-4 w-4" />
-              </Button>
+              <a href="https://www.facebook.com/designcraftin" target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="sm" className="text-primary-foreground/60 hover:text-accent p-2">
+                  <Facebook className="h-4 w-4" />
+                </Button>
+              </a>
+              <a href="https://twitter.com/designcraftin" target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="sm" className="text-primary-foreground/60 hover:text-accent p-2">
+                  <Twitter className="h-4 w-4" />
+                </Button>
+              </a>
+              <a href="https://www.instagram.com/desi.gncraftin/" target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="sm" className="text-primary-foreground/60 hover:text-accent p-2">
+                  <Instagram className="h-4 w-4" />
+                </Button>
+              </a>
+              <a href="https://www.linkedin.com/company/designcraftin" target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="sm" className="text-primary-foreground/60 hover:text-accent p-2">
+                  <Linkedin className="h-4 w-4" />
+                </Button>
+              </a>
             </div>
           </div>
 
