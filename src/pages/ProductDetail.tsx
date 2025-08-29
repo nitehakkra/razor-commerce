@@ -9,6 +9,9 @@ import { useCart } from '@/contexts/CartContext';
 import { formatCurrency } from '@/lib/utils';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import ProductFeatures from '@/components/sections/ProductFeatures';
+import TestimonialsSection from '@/components/sections/TestimonialsSection';
+import PricingSection from '@/components/sections/PricingSection'; // New import
 
 // Product-specific descriptions based on research
 const getProductDescription = (product: any) => {
@@ -557,6 +560,97 @@ const ProductDetail: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* Product Features Section */}
+          <ProductFeatures features={[
+            {
+              title: "Fully Responsive",
+              description: "Looks great on any device, from mobile to desktop.",
+              icon: (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              )
+            },
+            {
+              title: "High-Quality Design",
+              description: "Built with modern design principles and attention to detail.",
+              icon: (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              )
+            },
+            {
+              title: "Easy to Customize",
+              description: "Customize the template to fit your brand and needs.",
+              icon: (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              )
+            }
+          ]} />
+
+          {/* Pricing Section */}
+          <PricingSection plans={[
+            {
+              name: "Basic",
+              price: 1499,
+              period: "one-time",
+              features: [
+                "Single website use",
+                "6 months support",
+                "Free updates"
+              ]
+            },
+            {
+              name: "Premium",
+              price: 2499,
+              period: "one-time",
+              features: [
+                "Unlimited websites",
+                "Lifetime support",
+                "Free updates",
+                "Exclusive assets"
+              ],
+              isPopular: true
+            },
+            {
+              name: "Extended",
+              price: 3499,
+              period: "one-time",
+              features: [
+                "Unlimited websites",
+                "Lifetime support",
+                "Free updates",
+                "Exclusive assets",
+                "Source files"
+              ]
+            }
+          ]} />
+
+          {/* Testimonials Section */}
+          <TestimonialsSection testimonials={[
+            {
+              quote: "This template completely transformed my portfolio. I've received so many compliments!",
+              author: "Alex Johnson",
+              role: "Senior Designer",
+              company: "Creative Studio"
+            },
+            {
+              quote: "I was blown away by the quality of this template. It's perfect for my business!",
+              author: "Emily Chen",
+              role: "Founder",
+              company: "E-commerce Store"
+            },
+            {
+              quote: "The support team was incredibly helpful. They answered all my questions and helped me customize the template.",
+              author: "David Lee",
+              role: "Marketing Manager",
+              company: "Digital Agency"
+            }
+          ]} />
 
           {/* In-Depth Product Description */}
           <div className="mt-16">

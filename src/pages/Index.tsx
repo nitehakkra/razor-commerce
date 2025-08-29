@@ -7,6 +7,7 @@ import CustomDesignServices from '@/components/sections/CustomDesignServices';
 import WhyChooseUs from '@/components/sections/WhyChooseUs';
 import Testimonials from '@/components/sections/Testimonials';
 import Newsletter from '@/components/sections/Newsletter';
+import ParticleBackground from '@/components/effects/ParticleBackground';
 
 const Index = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -16,17 +17,20 @@ const Index = () => {
   }, []);
 
   return (
-    <div className={`min-h-screen bg-white transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-      <Header />
-      <main className="relative overflow-hidden">
-        <HeroSection />
-        <FeaturedProducts />
-        <CustomDesignServices />
-        <WhyChooseUs />
-        <Testimonials />
-        <Newsletter />
-      </main>
-      <Footer />
+    <div className={`min-h-screen transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`} style={{ background: 'transparent' }}>
+      <ParticleBackground />
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-grow">
+          <HeroSection />
+          <FeaturedProducts />
+          <CustomDesignServices />
+          <WhyChooseUs />
+          <Testimonials />
+          <Newsletter />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 };

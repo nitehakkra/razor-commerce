@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { Minus, Plus, X, ArrowLeft, ShoppingBag, CreditCard, Zap, Shield, Clock, Gift, Truck, Heart } from 'lucide-react';
+import React, { useState } from 'react';
+import { Minus, Plus, X, ArrowLeft, ShoppingBag, CreditCard, Zap, Shield, Clock, Gift, Truck, Heart, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -19,8 +18,93 @@ import { useNavigate } from 'react-router-dom';
 const Cart: React.FC = () => {
   const { items, removeItem, updateQuantity, total, clearCart } = useCart();
   const navigate = useNavigate();
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'manual'>('card');
+  const [customerDetails, setCustomerDetails] = useState({
+    name: '',
+    email: '',
+    phone: ''
+  });
 
-  const handleCheckout = async () => {
+  const handleManualPayment = async () => {
+    if (items.length === 0) return;
+
+    // Validate customer details for manual payment
+    if (!customerDetails.name || !customerDetails.email) {
+      toast.error('Please fill in your name and email address');
+      return;
+    }
+
+    const shippingCost = total >= 500 ? 0 : 50;
+    const finalTotal = total + shippingCost;
+
+    try {
+      // Generate order and invoice IDs
+      const orderId = generateOrderNumber();
+      const invoiceId = generateInvoiceId();
+      const orderDate = new Date();
+
+      // Prepare order details for email
+      const orderDetails: EmailOrderDetails = {
+        orderId,
+        invoiceId,
+        orderDate,
+        items: items.map(item => ({
+          id: item.id,
+          name: item.name,
+          description: item.description,
+          price: item.price,
+          quantity: item.quantity,
+          category: item.category
+        })),
+        subtotal: total,
+        shipping: shippingCost,
+        total: finalTotal,
+        paymentId: `MANUAL_${orderId}`,
+        paymentMethod: 'Manual Payment',
+        customerName: customerDetails.name,
+        customerEmail: customerDetails.email,
+        customer: {
+          name: customerDetails.name,
+          email: customerDetails.email,
+          phone: customerDetails.phone,
+          address: {
+            line1: 'Customer Address',
+            city: 'City',
+            state: 'State',
+            pincode: '000000',
+            country: 'India'
+          }
+        }
+      };
+
+      // Send manual payment order email with invoice
+      console.log('🔄 Attempting to send email to:', customerDetails.email);
+      const emailOrderDetails: EmailOrderDetails = {
+        ...orderDetails,
+        customerEmail: customerDetails.email,
+        customerName: customerDetails.name,
+      };
+      const emailSent = await sendOrderConfirmationEmail(emailOrderDetails);
+
+      if (emailSent) {
+        toast.success('Order placed successfully! Check your email for payment instructions.');
+      } else {
+        toast.error('Order placed but email sending failed. Please check browser console for details.');
+      }
+
+      // Clear cart
+      clearCart();
+
+      // Navigate to order confirmation page with manual payment info
+      navigate(`/order-confirmation?orderId=${orderId}&paymentMethod=manual&total=${finalTotal}&email=${orderDetails.customerEmail}&name=${orderDetails.customerName}`);
+
+    } catch (error) {
+      console.error('Manual payment error:', error);
+      toast.error('Failed to process manual payment order');
+    }
+  };
+
+  const handleCardCheckout = async () => {
     if (items.length === 0) return;
 
     // Amount is in INR; Razorpay expects paise
@@ -82,12 +166,13 @@ const Cart: React.FC = () => {
             };
 
             // Send order confirmation email with invoice
+            console.log('🔄 Attempting to send card payment email to:', orderDetails.customerEmail);
             const emailSent = await sendOrderConfirmationEmail(orderDetails);
 
             if (emailSent) {
               toast.success('Order confirmation email sent successfully!');
             } else {
-              toast.warning('Order processed but email failed. Contact support if needed.');
+              toast.error('Payment successful but email sending failed. Check browser console for details.');
             }
 
             // Clear cart
@@ -109,6 +194,14 @@ const Cart: React.FC = () => {
     } catch (err: any) {
       console.error(err);
       toast.error(err?.message || 'Unable to start checkout');
+    }
+  };
+
+  const handleCheckout = () => {
+    if (paymentMethod === 'manual') {
+      handleManualPayment();
+    } else {
+      handleCardCheckout();
     }
   };
 
@@ -390,29 +483,150 @@ const Cart: React.FC = () => {
                     </div>
                   </div>
 
+                  {/* Payment Method Selection */}
+                  <div className="space-y-4 border-t border-gray-200 pt-4">
+                    <h3 className="font-semibold text-gray-900">Payment Method</h3>
+                    <div className="space-y-3">
+                      {/* Credit/Debit Card Option */}
+                      <label className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="card"
+                          checked={paymentMethod === 'card'}
+                          onChange={(e) => setPaymentMethod(e.target.value as 'card' | 'manual')}
+                          className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                        />
+                        <CreditCard className="w-5 h-5 text-gray-600" />
+                        <div className="flex-1">
+                          <div className="font-medium text-gray-900">Credit/Debit Cards</div>
+                          <div className="text-sm text-gray-500">Pay instantly with Razorpay gateway</div>
+                        </div>
+                      </label>
+
+                      {/* Manual Payment Option */}
+                      <label className="flex items-center space-x-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="manual"
+                          checked={paymentMethod === 'manual'}
+                          onChange={(e) => setPaymentMethod(e.target.value as 'card' | 'manual')}
+                          className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                        />
+                        <Mail className="w-5 h-5 text-gray-600" />
+                        <div className="flex-1">
+                          <div className="font-medium text-gray-900">Manual Payment</div>
+                          <div className="text-sm text-gray-500">Receive invoice via email for bank transfer</div>
+                        </div>
+                      </label>
+                      
+                      {/* Customer Details Form for Manual Payment */}
+                      {paymentMethod === 'manual' && (
+                        <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg space-y-3">
+                          <h4 className="font-medium text-gray-900">Contact Details</h4>
+                          <div className="grid grid-cols-1 gap-3">
+                            <div>
+                              <label htmlFor="customerName" className="block text-sm font-medium text-gray-700 mb-1">
+                                Full Name *
+                              </label>
+                              <input
+                                type="text"
+                                id="customerName"
+                                value={customerDetails.name}
+                                onChange={(e) => setCustomerDetails(prev => ({ ...prev, name: e.target.value }))}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Enter your full name"
+                                required
+                              />
+                            </div>
+                            <div>
+                              <label htmlFor="customerEmail" className="block text-sm font-medium text-gray-700 mb-1">
+                                Email Address *
+                              </label>
+                              <input
+                                type="email"
+                                id="customerEmail"
+                                value={customerDetails.email}
+                                onChange={(e) => setCustomerDetails(prev => ({ ...prev, email: e.target.value }))}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Enter your email address"
+                                required
+                              />
+                            </div>
+                            <div>
+                              <label htmlFor="customerPhone" className="block text-sm font-medium text-gray-700 mb-1">
+                                Phone Number
+                              </label>
+                              <input
+                                type="tel"
+                                id="customerPhone"
+                                value={customerDetails.phone}
+                                onChange={(e) => setCustomerDetails(prev => ({ ...prev, phone: e.target.value }))}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Enter your phone number"
+                              />
+                            </div>
+                          </div>
+                          <p className="text-xs text-gray-500">
+                            * Required fields. Invoice and payment instructions will be sent to your email.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
                   <Button 
                     className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
                     onClick={handleCheckout}
                   >
-                    <CreditCard className="mr-2 h-4 w-4" />
-                    Proceed to Checkout
+                    {paymentMethod === 'manual' ? (
+                      <>
+                        <Mail className="mr-2 h-4 w-4" />
+                        Send Invoice via Email
+                      </>
+                    ) : (
+                      <>
+                        <CreditCard className="mr-2 h-4 w-4" />
+                        Proceed to Checkout
+                      </>
+                    )}
                   </Button>
 
                   {/* Payment Security */}
                   <div className="space-y-4 pt-4 border-t border-gray-200">
                     <div className="text-center">
-                      {/* Razorpay Branding */}
-                      <div className="flex items-center justify-center gap-2 mb-4 bg-blue-50 border border-blue-100 rounded-lg py-3 px-4">
-                        <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
-                            <span className="text-white font-bold text-sm">R</span>
+                      {paymentMethod === 'card' ? (
+                        <>
+                          {/* Razorpay Branding */}
+                          <div className="flex items-center justify-center gap-2 mb-4 bg-blue-50 border border-blue-100 rounded-lg py-3 px-4">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
+                                <span className="text-white font-bold text-sm">R</span>
+                              </div>
+                              <div className="text-left">
+                                <div className="text-sm font-semibold text-blue-900">Razorpay</div>
+                                <div className="text-xs text-blue-700">Secure Payment Gateway</div>
+                              </div>
+                            </div>
                           </div>
-                          <div className="text-left">
-                            <div className="text-sm font-semibold text-blue-900">Razorpay</div>
-                            <div className="text-xs text-blue-700">Secure Payment Gateway</div>
+                        </>
+                      ) : (
+                        <>
+                          {/* Manual Payment Info */}
+                          <div className="flex items-center justify-center gap-2 mb-4 bg-green-50 border border-green-100 rounded-lg py-3 px-4">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 bg-green-600 rounded flex items-center justify-center">
+                                <Mail className="w-4 h-4 text-white" />
+                              </div>
+                              <div className="text-left">
+                                <div className="text-sm font-semibold text-green-900">Manual Payment</div>
+                                <div className="text-xs text-green-700">Invoice sent via email</div>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
+                        </>
+                      )}
                       
                       {/* Security Certifications */}
                       <div className="flex justify-center gap-3 mb-4">
@@ -435,27 +649,47 @@ const Cart: React.FC = () => {
                         <p className="text-xs text-gray-500 mb-3 font-medium">Accepted Payment Methods</p>
                         <div className="flex justify-center items-center gap-2 flex-wrap">
                           {/* Visa */}
-                          <div className="bg-white border border-gray-200 rounded-md px-3 py-2 shadow-sm">
-                            <div className="text-blue-800 font-bold text-sm">VISA</div>
+                          <div className="bg-white border border-gray-200 rounded-md p-1 shadow-sm flex items-center justify-center w-12 h-8">
+                            <svg viewBox="0 0 38 24" className="h-4">
+                              <rect width="38" height="24" rx="4" fill="#1A1F71"/>
+                              <text x="19" y="16" textAnchor="middle" fill="white" fontSize="8" fontWeight="bold">VISA</text>
+                            </svg>
                           </div>
                           {/* Mastercard */}
-                          <div className="bg-white border border-gray-200 rounded-md px-3 py-2 shadow-sm">
-                            <div className="flex items-center gap-1">
-                              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                              <div className="w-3 h-3 bg-yellow-500 rounded-full -ml-1"></div>
-                            </div>
+                          <div className="bg-white border border-gray-200 rounded-md p-1 shadow-sm flex items-center justify-center w-12 h-8">
+                            <svg viewBox="0 0 38 24" className="h-4">
+                              <rect width="38" height="24" rx="4" fill="#000"/>
+                              <circle cx="14" cy="12" r="6" fill="#EB001B"/>
+                              <circle cx="24" cy="12" r="6" fill="#F79E1B"/>
+                            </svg>
                           </div>
                           {/* RuPay */}
-                          <div className="bg-white border border-gray-200 rounded-md px-3 py-2 shadow-sm">
-                            <div className="text-green-700 font-bold text-sm">RuPay</div>
+                          <div className="bg-white border border-gray-200 rounded-md p-1 shadow-sm flex items-center justify-center w-12 h-8">
+                            <svg viewBox="0 0 38 24" className="h-4">
+                              <rect width="38" height="24" rx="4" fill="#00A651"/>
+                              <text x="19" y="16" textAnchor="middle" fill="white" fontSize="6" fontWeight="bold">RuPay</text>
+                            </svg>
                           </div>
                           {/* UPI */}
-                          <div className="bg-white border border-gray-200 rounded-md px-3 py-2 shadow-sm">
-                            <div className="text-orange-600 font-bold text-sm">UPI</div>
+                          <div className="bg-white border border-gray-200 rounded-md p-1 shadow-sm flex items-center justify-center w-12 h-8">
+                            <svg viewBox="0 0 38 24" className="h-4">
+                              <rect width="38" height="24" rx="4" fill="#FF6600"/>
+                              <text x="19" y="16" textAnchor="middle" fill="white" fontSize="7" fontWeight="bold">UPI</text>
+                            </svg>
+                          </div>
+                          {/* American Express */}
+                          <div className="bg-white border border-gray-200 rounded-md p-1 shadow-sm flex items-center justify-center w-12 h-8">
+                            <svg viewBox="0 0 38 24" className="h-4">
+                              <rect width="38" height="24" rx="4" fill="#006FCF"/>
+                              <text x="19" y="16" textAnchor="middle" fill="white" fontSize="5" fontWeight="bold">AMEX</text>
+                            </svg>
                           </div>
                           {/* Net Banking */}
-                          <div className="bg-white border border-gray-200 rounded-md px-2 py-2 shadow-sm">
-                            <div className="text-blue-600 font-medium text-xs">Net Banking</div>
+                          <div className="bg-white border border-gray-200 rounded-md p-1 shadow-sm flex items-center justify-center w-14 h-8">
+                            <svg viewBox="0 0 40 24" className="h-4">
+                              <rect width="40" height="24" rx="4" fill="#4A90E2"/>
+                              <text x="20" y="16" textAnchor="middle" fill="white" fontSize="4" fontWeight="bold">NET BANKING</text>
+                            </svg>
                           </div>
                         </div>
                       </div>

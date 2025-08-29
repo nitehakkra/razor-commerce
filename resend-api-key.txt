@@ -1,0 +1,14 @@
+RESEND API KEY SETUP INSTRUCTIONS
+
+To complete the email service setup:
+
+1. Create a file named `.env` in your project root
+2. Add this line to the file:
+   VITE_RESEND_API_KEY=your_actual_resend_api_key_here
+
+3. Replace 'your_actual_resend_api_key_here' with your real Resend API key
+4. Restart your development server
+
+The .env file should be in: c:\Users\creat\CascadeProjects\razor-commerce\.env
+
+After creating the file, the email service will be able to send invoices with PDF attachments.

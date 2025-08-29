@@ -5,6 +5,73 @@ import { COMPANY_DETAILS } from './invoice-utils';
 // Initialize Resend with API key
 const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
 
+// Simple email function for testing
+export const sendSimpleTestEmail = async (email: string, orderDetails: EmailOrderDetails): Promise<boolean> => {
+  console.log('🔍 DEBUG: Starting email send process');
+  console.log('🔍 DEBUG: Target email:', email);
+  console.log('🔍 DEBUG: Order details:', orderDetails);
+  
+  try {
+    const apiKey = import.meta.env.VITE_RESEND_API_KEY;
+    console.log('🔍 DEBUG: Environment check - API key exists:', !!apiKey);
+    console.log('🔍 DEBUG: API key first 10 chars:', apiKey ? apiKey.substring(0, 10) : 'undefined');
+    
+    if (!apiKey) {
+      console.error('❌ VITE_RESEND_API_KEY is missing from .env file');
+      console.error('❌ Make sure you have VITE_RESEND_API_KEY=your_key in your .env file');
+      console.error('❌ And restart your dev server after adding it');
+      return false;
+    }
+
+    console.log('✅ API Key found, creating Resend instance...');
+    
+    // Create a new Resend instance to ensure fresh API key
+    const testResend = new Resend(apiKey);
+    
+    console.log('🔄 Preparing email data...');
+    const emailData = {
+      from: 'Razor Commerce <onboarding@resend.dev>',
+      to: [email],
+      subject: `🎉 Order Confirmation - ${orderDetails.orderId}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h2 style="color: #2563eb;">Order Confirmed!</h2>
+          <p>Hi ${orderDetails.customerName},</p>
+          <p>Your order <strong>${orderDetails.orderId}</strong> has been confirmed.</p>
+          <p><strong>Total:</strong> ₹${orderDetails.total}</p>
+          <p><strong>Payment Method:</strong> ${orderDetails.paymentMethod}</p>
+          <p>Thank you for your purchase!</p>
+          <hr>
+          <p style="color: #666; font-size: 12px;">This is a test email from Razor Commerce</p>
+        </div>
+      `,
+    };
+    
+    console.log('🔄 Email data prepared:', emailData);
+    console.log('🔄 Making API call to Resend...');
+    
+    const { data, error } = await testResend.emails.send(emailData);
+
+    if (error) {
+      console.error('❌ Resend API Error Details:', error);
+      console.error('❌ Error type:', typeof error);
+      console.error('❌ Error message:', error.message || 'Unknown error');
+      return false;
+    }
+
+    console.log('✅ Email sent successfully!');
+    console.log('✅ Response data:', data);
+    return true;
+  } catch (error) {
+    console.error('❌ Email sending failed with exception:');
+    console.error('❌ Error type:', typeof error);
+    console.error('❌ Error message:', error instanceof Error ? error.message : String(error));
+    console.error('❌ Full error:', error);
+    console.error('❌ Error stack:', error instanceof Error ? error.stack : 'No stack trace');
+    return false;
+  }
+};
+
 export interface EmailOrderDetails extends OrderDetails {
   customerName: string;
   customerEmail: string;
@@ -138,15 +205,22 @@ const generateOrderConfirmationEmail = (orderDetails: EmailOrderDetails): string
 // Send order confirmation email with PDF invoice
 export const sendOrderConfirmationEmail = async (orderDetails: EmailOrderDetails): Promise<boolean> => {
   try {
+    console.log('Starting email send process for:', orderDetails.customerEmail);
+    
+    // Check if API key exists
+    const apiKey = import.meta.env.VITE_RESEND_API_KEY;
+    if (!apiKey) {
+      console.error('VITE_RESEND_API_KEY is not set in environment variables');
+      return false;
+    }
+    console.log('API key found:', apiKey.substring(0, 10) + '...');
+
     // Generate PDF invoice
-    const pdfBuffer = await generateInvoicePDF(orderDetails);
-    
-    // Convert buffer to base64 for attachment
-    const base64Pdf = Buffer.from(pdfBuffer).toString('base64');
-    
-    // Send email with Resend
+    const pdfBytes = await generateInvoicePDF(orderDetails);
+    const base64Pdf = btoa(String.fromCharCode(...pdfBytes));
+
     const { data, error } = await resend.emails.send({
-      from: `${COMPANY_DETAILS.name} <orders@razorcommerce.com>`, // Replace with your verified domain
+      from: 'Razor Commerce <onboarding@resend.dev>', // Using Resend's default from address for testing
       to: [orderDetails.customerEmail],
       subject: `Order Confirmation - ${orderDetails.orderId} | ${COMPANY_DETAILS.name}`,
       html: generateOrderConfirmationEmail(orderDetails),
@@ -160,7 +234,7 @@ export const sendOrderConfirmationEmail = async (orderDetails: EmailOrderDetails
     });
 
     if (error) {
-      console.error('Email sending failed:', error);
+      console.error('Resend API error:', error);
       return false;
     }
 
@@ -168,6 +242,7 @@ export const sendOrderConfirmationEmail = async (orderDetails: EmailOrderDetails
     return true;
   } catch (error) {
     console.error('Error sending order confirmation email:', error);
+    console.error('Error details:', error);
     return false;
   }
 };

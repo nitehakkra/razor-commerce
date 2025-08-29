@@ -41,16 +41,16 @@ const FeaturedProducts: React.FC = () => {
       
       <div className="container-responsive relative z-10">
         {/* Enhanced Section Header */}
-        <div className={`text-center space-y-6 mb-20 transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 text-sm font-semibold shadow-lg hover:shadow-xl transition-shadow">
-            ✨ Featured Collection
+        <div className={`text-center space-y-8 mb-16 transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+          <Badge className="mb-4 bg-slate-100 text-slate-700 px-5 py-2 text-sm font-medium border border-slate-200">
+            Featured Collection
           </Badge>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-            Premium <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">Design Templates</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
+            Premium <span className="text-gray-700">Design Templates</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Discover our handpicked selection of premium web and UI design templates,
-            <span className="text-blue-600 font-semibold"> meticulously crafted</span> for exceptional quality and modern aesthetics.
+            <span className="font-semibold text-gray-800"> meticulously crafted</span> for exceptional quality and modern aesthetics.
           </p>
         </div>
 
@@ -59,7 +59,7 @@ const FeaturedProducts: React.FC = () => {
           {featuredProducts.map((product, index) => (
             <Card 
               key={product.id} 
-              className={`group cursor-pointer overflow-hidden bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:border-blue-300/50 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
+              className={`group cursor-pointer overflow-hidden bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
               style={{ 
                 animationDelay: `${index * 0.15}s`,
                 transitionDelay: `${index * 0.1}s`
@@ -97,7 +97,7 @@ const FeaturedProducts: React.FC = () => {
                 
                 {/* Premium badge */}
                 <div className="absolute top-4 left-4">
-                  <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-2 py-1 shadow-lg">
+                  <Badge className="bg-slate-900 text-white text-xs font-medium px-2 py-1">
                     PREMIUM
                   </Badge>
                 </div>
@@ -106,7 +106,7 @@ const FeaturedProducts: React.FC = () => {
               <CardContent className="p-6 space-y-5">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <Badge className="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full">
+                    <Badge className="bg-gray-100 text-gray-600 text-xs font-normal px-2 py-1 rounded">
                       {product.category}
                     </Badge>
                     <div className="flex items-center space-x-1">
@@ -119,7 +119,7 @@ const FeaturedProducts: React.FC = () => {
                       <span className="text-sm font-semibold text-gray-700 ml-1">{product.rating}</span>
                     </div>
                   </div>
-                  <h3 className="font-bold text-xl leading-tight text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                  <h3 className="font-bold text-lg leading-tight text-gray-900 group-hover:text-gray-700 transition-colors duration-300">
                     {product.name}
                   </h3>
                   <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
@@ -129,17 +129,17 @@ const FeaturedProducts: React.FC = () => {
 
                 <div className="flex items-center justify-between pt-3 border-t border-gray-100">
                   <div className="space-y-1">
-                    <p className="text-2xl font-bold text-gray-900">
+                    <p className="text-xl font-bold text-gray-900">
                       {formatCurrency(product.price)}
                     </p>
-                    <p className="text-xs text-green-600 font-medium flex items-center">
-                      <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                      Lifetime updates
+                    <p className="text-xs text-gray-600 font-medium flex items-center">
+                      <span className="w-1.5 h-1.5 bg-gray-500 rounded-full mr-1.5"></span>
+                      Instant download
                     </p>
                   </div>
                   <div className="flex space-x-2">
                     <Link to={`/product/${product.id}`} onClick={(e) => e.stopPropagation()}>
-                      <Button variant="outline" size="sm" className="border-gray-300 hover:border-blue-400 hover:text-blue-600 transition-colors" aria-label={`View details for ${product.name}`}>
+                      <Button variant="outline" size="sm" className="border-gray-300 hover:border-gray-400 hover:text-gray-700 transition-colors" aria-label={`View details for ${product.name}`}>
                         Details
                       </Button>
                     </Link>
@@ -149,7 +149,7 @@ const FeaturedProducts: React.FC = () => {
                         e.stopPropagation();
                         addItem(product);
                       }}
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                      className="bg-slate-800 hover:bg-slate-900 text-white transition-colors duration-200"
                       aria-label={`Add ${product.name} to cart`}
                     >
                       <ShoppingCart className="h-4 w-4 mr-2" />
@@ -165,12 +165,11 @@ const FeaturedProducts: React.FC = () => {
         {/* Enhanced View All Button */}
         <div className={`text-center transform transition-all duration-1000 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '0.8s' }}>
           <Link to="/products">
-            <Button className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-10 py-4 rounded-full font-bold text-lg shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105" aria-label="View all templates">
-              <span className="relative z-10 flex items-center">
+            <Button className="group bg-slate-900 hover:bg-slate-800 text-white px-8 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300" aria-label="View all templates">
+              <span className="flex items-center">
                 Explore All Templates
-                <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-2" />
+                <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
             </Button>
           </Link>
         </div>

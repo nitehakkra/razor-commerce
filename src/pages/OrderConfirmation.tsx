@@ -17,6 +17,7 @@ interface OrderSummary {
   paymentId: string;
   customerEmail: string;
   customerName: string;
+  paymentMethod?: string;
   items: Array<{
     name: string;
     quantity: number;
@@ -35,19 +36,21 @@ const OrderConfirmation: React.FC = () => {
   useEffect(() => {
     const orderId = searchParams.get('orderId');
     const paymentId = searchParams.get('paymentId');
+    const paymentMethod = searchParams.get('paymentMethod');
     const total = searchParams.get('total');
     const customerEmail = searchParams.get('email');
     const customerName = searchParams.get('name') || 'Valued Customer';
 
-    if (orderId && paymentId && total) {
+    if (orderId && total && (paymentId || paymentMethod === 'manual')) {
       // In production, you'd fetch real order data from your backend
       setOrderData({
         orderId,
         invoiceId: `INV-${orderId}`,
         total: parseFloat(total),
-        paymentId,
+        paymentId: paymentId || `MANUAL_${orderId}`,
         customerEmail: customerEmail || '',
         customerName,
+        paymentMethod: paymentMethod || 'card',
         items: [
           { name: 'Premium UI Template Bundle', quantity: 1, price: parseFloat(total) }
         ], // This would come from actual order data
@@ -107,10 +110,13 @@ const OrderConfirmation: React.FC = () => {
               <CheckCircle className="h-12 w-12 text-white" />
             </div>
             <h1 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-slate-900 via-green-600 to-slate-900 bg-clip-text text-transparent leading-tight mb-4">
-              Order Confirmed!
+              {orderData.paymentMethod === 'manual' ? 'Order Placed!' : 'Order Confirmed!'}
             </h1>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto font-medium">
-              Thank you {orderData.customerName}! Your payment has been processed successfully and your order is being prepared.
+              {orderData.paymentMethod === 'manual' ? 
+                `Thank you ${orderData.customerName}! Your order has been placed. Please check your email to complete the payment manually.` :
+                `Thank you ${orderData.customerName}! Your payment has been processed successfully and your order is being prepared.`
+              }
             </p>
             <div className="w-32 h-1 bg-gradient-to-r from-green-600 to-emerald-600 mx-auto rounded-full mt-6"></div>
           </div>
@@ -189,42 +195,84 @@ const OrderConfirmation: React.FC = () => {
                 <CardContent className="p-8">
                   <h2 className="text-2xl font-bold text-gray-900 mb-6">What happens next?</h2>
                   
-                  <div className="space-y-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold text-sm">1</span>
+                  {orderData.paymentMethod === 'manual' ? (
+                    <div className="space-y-6">
+                      <div className="flex items-start space-x-4">
+                        <div className="w-8 h-8 bg-gradient-to-r from-orange-600 to-red-600 rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-sm">1</span>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900">Check Your Email</h3>
+                          <p className="text-gray-600">We've sent you an invoice with payment instructions and bank details to complete your payment.</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900">Order Processing</h3>
-                        <p className="text-gray-600">Your order is being processed and digital products are being prepared for download.</p>
+                      
+                      <div className="flex items-start space-x-4">
+                        <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-sm">2</span>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900">Complete Payment</h3>
+                          <p className="text-gray-600">Make the payment using bank transfer, UPI, or other methods mentioned in the invoice.</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start space-x-4">
+                        <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-sm">3</span>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900">Order Processing</h3>
+                          <p className="text-gray-600">Once we confirm your payment, your order will be processed and download links will be shared.</p>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                        <div className="flex items-center text-amber-800 mb-2">
+                          <Mail className="mr-2 h-4 w-4" />
+                          <span className="font-medium">Payment Pending</span>
+                        </div>
+                        <p className="text-amber-700 text-sm">Please complete your payment using the instructions sent to your email. Contact support if you need assistance.</p>
                       </div>
                     </div>
-                    
-                    <div className="flex items-start space-x-4">
-                      <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold text-sm">2</span>
+                  ) : (
+                    <div className="space-y-6">
+                      <div className="flex items-start space-x-4">
+                        <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-sm">1</span>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900">Order Processing</h3>
+                          <p className="text-gray-600">Your order is being processed and digital products are being prepared for download.</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900">Email Confirmation</h3>
-                        <p className="text-gray-600">
-                          {orderData.emailSent ? 
-                            'Confirmation email with invoice has been sent to your email address.' :
-                            'Confirmation email with invoice will be sent shortly to your email address.'
-                          }
-                        </p>
+                      
+                      <div className="flex items-start space-x-4">
+                        <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-sm">2</span>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900">Email Confirmation</h3>
+                          <p className="text-gray-600">
+                            {orderData.emailSent ? 
+                              'Confirmation email with invoice has been sent to your email address.' :
+                              'Confirmation email with invoice will be sent shortly to your email address.'
+                            }
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-start space-x-4">
+                        <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center flex-shrink-0">
+                          <span className="text-white font-bold text-sm">3</span>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900">Download Access</h3>
+                          <p className="text-gray-600">You'll receive download links and access instructions for your purchased templates.</p>
+                        </div>
                       </div>
                     </div>
-                    
-                    <div className="flex items-start space-x-4">
-                      <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold text-sm">3</span>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900">Download Access</h3>
-                        <p className="text-gray-600">You'll receive download links and access instructions for your purchased templates.</p>
-                      </div>
-                    </div>
-                  </div>
+                  )}
                 </CardContent>
               </Card>
             </div>
