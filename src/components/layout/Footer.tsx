@@ -7,7 +7,7 @@ import brandLogo from '@/assets/brand-logo.png';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-primary text-primary-foreground">
+    <footer className="bg-primary text-primary-foreground relative z-20 mt-auto flex-shrink-0">
       <div className="container-responsive">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-16">
@@ -135,7 +135,7 @@ const Footer: React.FC = () => {
               {/* Visa */}
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
                 <img 
-                  src="https://www.freepnglogos.com/uploads/verified-by-visa-logo-png-0.png" 
+                  src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" 
                   alt="Visa" 
                   className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
                 />
@@ -144,7 +144,7 @@ const Footer: React.FC = () => {
               {/* Mastercard */}
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
                 <img 
-                  src="https://www.pngall.com/wp-content/uploads/13/Mastercard-Logo-No-Background.png" 
+                  src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" 
                   alt="Mastercard" 
                   className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
                 />
@@ -153,7 +153,7 @@ const Footer: React.FC = () => {
               {/* American Express */}
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
                 <img 
-                  src="https://1000logos.net/wp-content/uploads/2016/10/American-Express-Color-500x281.png" 
+                  src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" 
                   alt="American Express" 
                   className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
                 />
@@ -171,7 +171,7 @@ const Footer: React.FC = () => {
               {/* RuPay */}
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
                 <img 
-                  src="https://iconape.com/wp-content/png_logo_vector/rupay-logo.png" 
+                  src="https://upload.wikimedia.org/wikipedia/commons/3/31/RuPay.svg" 
                   alt="RuPay" 
                   className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
                 />
@@ -203,6 +203,9 @@ const Footer: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      {/* Absolute bottom border to ensure no white space */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-primary"></div>
     </footer>
   );
 };
