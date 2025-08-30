@@ -650,52 +650,51 @@ const Cart: React.FC = () => {
                         <div className="flex justify-center items-center gap-2 flex-wrap">
                           {/* Visa */}
                           <div className="bg-white border border-gray-200 rounded-md p-2 shadow-sm flex items-center justify-center w-12 h-8">
-                            <img 
-                              src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" 
-                              alt="Visa" 
-                              className="max-h-4 max-w-full object-contain"
-                            />
+                            <svg viewBox="0 0 48 24" className="h-4">
+                              <rect width="48" height="24" rx="3" fill="#1A1F71"/>
+                              <text x="24" y="16" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold" fontFamily="Arial" style={{letterSpacing: '0.5px'}}>VISA</text>
+                            </svg>
                           </div>
                           {/* Mastercard */}
                           <div className="bg-white border border-gray-200 rounded-md p-2 shadow-sm flex items-center justify-center w-12 h-8">
-                            <img 
-                              src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" 
-                              alt="Mastercard" 
-                              className="max-h-4 max-w-full object-contain"
-                            />
+                            <svg viewBox="0 0 48 24" className="h-4">
+                              <rect width="48" height="24" rx="3" fill="#EB001B"/>
+                              <circle cx="16" cy="12" r="8" fill="#EB001B"/>
+                              <circle cx="32" cy="12" r="8" fill="#FF5F00"/>
+                              <circle cx="24" cy="12" r="8" fill="#FF5F00" fillOpacity="0.8"/>
+                            </svg>
                           </div>
                           {/* RuPay */}
                           <div className="bg-white border border-gray-200 rounded-md p-2 shadow-sm flex items-center justify-center w-12 h-8">
-                            <img 
-                              src="https://upload.wikimedia.org/wikipedia/commons/3/31/RuPay.svg" 
-                              alt="RuPay" 
-                              className="max-h-4 max-w-full object-contain"
-                            />
+                            <svg viewBox="0 0 60 24" className="h-4">
+                              <rect width="60" height="24" rx="3" fill="#0066CC"/>
+                              <text x="30" y="15" textAnchor="middle" fill="white" fontSize="8" fontWeight="bold" fontFamily="Arial">RuPay</text>
+                            </svg>
                           </div>
                           {/* UPI */}
                           <div className="bg-white border border-gray-200 rounded-md p-2 shadow-sm flex items-center justify-center w-12 h-8">
-                            <svg viewBox="0 0 100 40" className="h-4 w-10">
-                              <rect width="100" height="40" rx="6" fill="#FF6600"/>
-                              <text x="50" y="26" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold" fontFamily="Arial, sans-serif">UPI</text>
+                            <svg viewBox="0 0 48 24" className="h-4">
+                              <rect width="48" height="24" rx="3" fill="#FF6600"/>
+                              <text x="24" y="15" textAnchor="middle" fill="white" fontSize="9" fontWeight="bold" fontFamily="Arial">UPI</text>
                             </svg>
                           </div>
                           {/* American Express */}
                           <div className="bg-white border border-gray-200 rounded-md p-2 shadow-sm flex items-center justify-center w-12 h-8">
-                            <img 
-                              src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" 
-                              alt="American Express" 
-                              className="max-h-4 max-w-full object-contain"
-                            />
+                            <svg viewBox="0 0 48 24" className="h-4">
+                              <rect width="48" height="24" rx="2" fill="#006FCF"/>
+                              <text x="24" y="10" textAnchor="middle" fill="white" fontSize="4" fontWeight="bold" fontFamily="Arial">AMERICAN</text>
+                              <text x="24" y="18" textAnchor="middle" fill="white" fontSize="4" fontWeight="bold" fontFamily="Arial">EXPRESS</text>
+                            </svg>
                           </div>
                           {/* Net Banking */}
-                          <div className="bg-white border border-gray-200 rounded-md p-1 shadow-sm flex items-center justify-center w-14 h-8">
+                          <div className="bg-white border border-gray-200 rounded-md p-2 shadow-sm flex items-center justify-center w-14 h-8">
                             <svg viewBox="0 0 56 24" className="h-4">
-                              <rect width="56" height="24" rx="4" fill="#4A90E2"/>
-                              <rect x="4" y="6" width="8" height="12" fill="white" rx="1"/>
-                              <rect x="14" y="8" width="6" height="10" fill="white" rx="1"/>
-                              <rect x="22" y="6" width="8" height="12" fill="white" rx="1"/>
-                              <rect x="32" y="8" width="6" height="10" fill="white" rx="1"/>
-                              <rect x="40" y="6" width="8" height="12" fill="white" rx="1"/>
+                              <rect width="56" height="24" rx="3" fill="#28A745"/>
+                              <rect x="6" y="8" width="6" height="10" fill="white" rx="1"/>
+                              <rect x="14" y="6" width="6" height="12" fill="white" rx="1"/>
+                              <rect x="22" y="8" width="6" height="10" fill="white" rx="1"/>
+                              <rect x="30" y="6" width="6" height="12" fill="white" rx="1"/>
+                              <rect x="38" y="8" width="6" height="10" fill="white" rx="1"/>
                               <text x="28" y="20" textAnchor="middle" fill="white" fontSize="3" fontWeight="bold">NET BANKING</text>
                             </svg>
                           </div>

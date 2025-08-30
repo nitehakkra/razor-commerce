@@ -134,56 +134,59 @@ const Footer: React.FC = () => {
             <div className="flex flex-wrap justify-center items-center gap-6 md:gap-8">
               {/* Visa */}
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
-                <img 
-                  src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" 
-                  alt="Visa" 
-                  className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
-                />
+                <svg viewBox="0 0 48 24" className="h-6 group-hover:scale-105 transition-transform duration-300">
+                  <rect width="48" height="24" rx="3" fill="white" className="group-hover:fill-[#1A1F71]"/>
+                  <text x="24" y="16" textAnchor="middle" fill="#1A1F71" fontSize="10" fontWeight="bold" fontFamily="Arial" className="group-hover:fill-white">VISA</text>
+                </svg>
               </div>
               
               {/* Mastercard */}
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
-                <img 
-                  src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" 
-                  alt="Mastercard" 
-                  className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
-                />
+                <svg viewBox="0 0 48 24" className="h-6 group-hover:scale-105 transition-transform duration-300">
+                  <rect width="48" height="24" rx="3" fill="white"/>
+                  <circle cx="16" cy="12" r="6" fill="#EB001B"/>
+                  <circle cx="32" cy="12" r="6" fill="#FF5F00"/>
+                  <circle cx="24" cy="12" r="6" fill="#FF5F00" fillOpacity="0.6"/>
+                </svg>
               </div>
               
               {/* American Express */}
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
-                <img 
-                  src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" 
-                  alt="American Express" 
-                  className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
-                />
-              </div>
-              
-              {/* Discover */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
-                <img 
-                  src="https://upload.wikimedia.org/wikipedia/commons/5/57/Discover_Card_logo.svg" 
-                  alt="Discover" 
-                  className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
-                />
+                <svg viewBox="0 0 48 24" className="h-6 group-hover:scale-105 transition-transform duration-300">
+                  <rect width="48" height="24" rx="2" fill="white" className="group-hover:fill-[#006FCF]"/>
+                  <text x="24" y="9" textAnchor="middle" fill="#006FCF" fontSize="4" fontWeight="bold" fontFamily="Arial" className="group-hover:fill-white">AMERICAN</text>
+                  <text x="24" y="17" textAnchor="middle" fill="#006FCF" fontSize="4" fontWeight="bold" fontFamily="Arial" className="group-hover:fill-white">EXPRESS</text>
+                </svg>
               </div>
               
               {/* RuPay */}
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
-                <img 
-                  src="https://upload.wikimedia.org/wikipedia/commons/3/31/RuPay.svg" 
-                  alt="RuPay" 
-                  className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
-                />
+                <svg viewBox="0 0 48 24" className="h-6 group-hover:scale-105 transition-transform duration-300">
+                  <rect width="48" height="24" rx="3" fill="white" className="group-hover:fill-[#0066CC]"/>
+                  <text x="24" y="16" textAnchor="middle" fill="#0066CC" fontSize="8" fontWeight="bold" fontFamily="Arial" className="group-hover:fill-white">RuPay</text>
+                </svg>
               </div>
               
-              {/* Razorpay */}
+              {/* UPI */}
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
-                <img 
-                  src="https://upload.wikimedia.org/wikipedia/commons/8/89/Razorpay_logo.svg" 
-                  alt="Razorpay" 
-                  className="max-h-6 max-w-16 object-contain filter brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
-                />
+                <svg viewBox="0 0 48 24" className="h-6 group-hover:scale-105 transition-transform duration-300">
+                  <rect width="48" height="24" rx="3" fill="white" className="group-hover:fill-[#FF6600]"/>
+                  <text x="24" y="16" textAnchor="middle" fill="#FF6600" fontSize="9" fontWeight="bold" fontFamily="Arial" className="group-hover:fill-white">UPI</text>
+                </svg>
+              </div>
+              
+              {/* Net Banking */}
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 hover:bg-white/20 transition-all duration-300 group w-20 h-12 flex items-center justify-center">
+                <svg viewBox="0 0 48 24" className="h-6 group-hover:scale-105 transition-transform duration-300">
+                  <rect width="48" height="24" rx="3" fill="white" className="group-hover:fill-[#28A745]"/>
+                  <rect x="6" y="8" width="4" height="8" fill="#28A745" rx="1" className="group-hover:fill-white"/>
+                  <rect x="12" y="6" width="4" height="12" fill="#28A745" rx="1" className="group-hover:fill-white"/>
+                  <rect x="18" y="8" width="4" height="8" fill="#28A745" rx="1" className="group-hover:fill-white"/>
+                  <rect x="24" y="6" width="4" height="12" fill="#28A745" rx="1" className="group-hover:fill-white"/>
+                  <rect x="30" y="8" width="4" height="8" fill="#28A745" rx="1" className="group-hover:fill-white"/>
+                  <rect x="36" y="6" width="4" height="12" fill="#28A745" rx="1" className="group-hover:fill-white"/>
+                  <text x="24" y="22" textAnchor="middle" fill="#28A745" fontSize="3" fontWeight="bold" className="group-hover:fill-white">NET BANKING</text>
+                </svg>
               </div>
             </div>
           </div>
